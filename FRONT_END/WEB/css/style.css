@@ -1,0 +1,51 @@
+*{
+    margin: 0;
+    font-family: 'Outfit';
+}
+
+
+/* HEADER */
+.header{
+    width: 100%;
+    height: 10%;
+    background-color: #D8E4FF;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 30px;
+}
+
+.linksHeader > a{
+    margin-right: 30px;
+    text-decoration: none;
+    color: #140F2D;
+}
+
+.linkBtn{
+    background-color: #140F2D;
+    color: #fff;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+
+.imgHeader > img{
+    width: 120px;
+    margin-left: 20px;
+}
+
+/* HERO SECTION */
+
+.heroSection{
+    background-image: url(../img/heroImage.png);
+    width: 100%;
+    height: 100vh;
+    color: #D8E4FF;
+    font-size: 66px;
+    display: flex;
+    align-items: center;
+}
+
+.heroSection > p{
+    margin-left: 40px;
+}
