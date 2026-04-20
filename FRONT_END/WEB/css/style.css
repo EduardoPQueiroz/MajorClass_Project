@@ -49,3 +49,101 @@
 .heroSection > p{
     margin-left: 40px;
 }
+
+/* MAIN CONTENT */
+.mainContent{
+    color: #D8E4FF;
+    background-color: #140F2D;
+    display: flex;
+    flex-direction: column;
+}
+
+.sectionTitle{
+    font-size: 35px;
+    margin-top: 30px;
+    align-self: center;
+}
+
+.contentSection{
+    font-size: 30px;
+    margin: 10px 30px 0 30px
+}
+
+.contentSection > img{
+    width: 550px;
+    margin-top: 20px;
+}
+
+.containerContent{
+    display: flex;
+}
+
+.containerLeft{
+    width: 50%;
+}
+
+.containerRight{
+    align-self: center;
+    width: 50%
+}
+
+.contentRight{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.contentRight > img{
+    align-self: flex-end;
+}
+
+
+/* ABOUT ME */
+.aboutMe{
+    color: #D8E4FF;
+    background-color: #016FB9;
+    display: flex;
+    flex-direction: column;
+    font-size: 30px;
+}
+
+.abtMeContent{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 30px
+}
+
+.abtMeContentRight{
+    align-self: flex-end;
+}
+
+.abtMeContent > img{
+    margin: 30px;
+}
+
+.abtMeContainer{
+    background-color: #140F2D;
+    display: flex;
+    flex-direction: column;
+}
+
+#violaoImg{
+    width: 325px;
+}
+
+#perfilImg{
+    width: 700px;
+}
+
+#tecladoImg{
+    width: 425px;
+}
+
+#guitarImg{
+    width: 380px;
+}
+
+
+
+
