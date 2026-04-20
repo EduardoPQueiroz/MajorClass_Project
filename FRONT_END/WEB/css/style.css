@@ -66,7 +66,7 @@
 
 .contentSection{
     font-size: 30px;
-    margin: 10px 30px 0 30px
+    margin: 10px 30px 20px 30px
 }
 
 .contentSection > img{
@@ -143,6 +143,53 @@
 #guitarImg{
     width: 380px;
 }
+
+/* CONTACT SECTION */
+.contactMe{
+    color: #D8E4FF;
+    font-size: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100vh;
+    background-color: #016FB9;
+}
+
+.contactSection{
+    display: flex;
+    align-items: center;
+    margin: 40px;
+}
+
+.contactSection > a{
+    text-decoration: none;
+    color: #D8E4FF;
+}
+
+.contactSection > a:hover{
+    text-decoration: underline;
+
+}
+
+.contactSection > img {
+    width: 200px;
+    margin-right: 30px;
+}
+
+/* FOOTER */
+.footer{
+    background-color: #D8E4FF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.footer > img{
+    width: 300px;
+}
+
+
+
 
 
 
