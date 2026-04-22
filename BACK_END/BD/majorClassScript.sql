@@ -1,0 +1,92 @@
+create database majorClass;
+use majorClass;
+
+
+-- ESTRUTURA ----------------------------------------------------------
+create table professor(
+	idProfessor int auto_increment,
+    nome varchar(100) not null,
+    email varchar(100) not null,
+    telefone varchar(15),
+    senha varchar(30) not null,
+    primary key(idProfessor)
+)auto_increment=100;
+
+
+create table aluno(
+	idAluno int auto_increment,
+    nome varchar(100) not null, 
+    email varchar(100) not null,
+    telefone varchar(15),
+    sexo char(1) check (sexo in('M', 'F')),
+    fkProfessor int not null,
+    fkInstrumento int not null,
+    primary key(idAluno),
+    foreign key (fkProfessor) references professor(idProfessor),
+    foreign key (fkInstrumento) references instrumento(idInstrumento)
+);
+
+
+create table instrumento(
+	idInstrumento int auto_increment,
+    nome varchar(50),
+    tipoInstrumento varchar(10) check (tipoInstrumento in('CORDAS', 'TECLAS', 'PERCUSSAO', 'SOPRO')),
+	primary key(idInstrumento)
+);
+
+insert into professor (nome, email, telefone, senha) values
+('Carlos Silva', 'carlos@majorclass.com', '11999990001', '123456'),
+('Mariana Souza', 'mariana@majorclass.com', '11999990002', '123456'),
+('João Pereira', 'joao@majorclass.com', '11999990003', '123456');
+
+create table aula(
+	idAula int auto_increment,
+    fkAluno int,
+    dataAula date,
+    horaAula time,
+    presenca varchar(30) check (presenca in('PRESENTE', 'AUSENTE', 'FALTA JUSTIFICADA')),
+    fkAulaAnterior int,
+    fkInstrumento int,
+    primary key(idAula, fkAluno)
+)auto_increment=1000;
+
+alter table aula add constraint foreign key (fkAluno) references aluno(idAluno);
+alter table aula add constraint foreign key (fkAulaAnterior) references aula(idAula);
+alter table aula add constraint foreign key (fkInstrumento) references instrumento(idInstrumento);
+
+-- INSERTS -------------------------------------------------------------------------------------------------------
+
+insert into professor (nome, email, telefone, senha) values
+('Carlos Silva', 'carlos@majorclass.com', '11999990001', '123456'),
+('Mariana Souza', 'mariana@majorclass.com', '11999990002', '123456'),
+('João Pereira', 'joao@majorclass.com', '11999990003', '123456');
+
+insert into instrumento (nome, tipoInstrumento) values
+('Violão', 'CORDAS'),
+('Guitarra', 'CORDAS'),
+('Piano', 'TECLAS'),
+('Teclado', 'TECLAS'),
+('Bateria', 'PERCUSSAO'),
+('Flauta', 'SOPRO');
+
+insert into aluno (nome, email, telefone, sexo, fkProfessor, fkInstrumento) values
+('Lucas Andrade', 'lucas@gmail.com', '11988880001', 'M', 100, 1),
+('Ana Clara', 'ana@gmail.com', '11988880002', 'F', 100, 3),
+('Pedro Henrique', 'pedro@gmail.com', '11988880003', 'M', 101, 2),
+('Juliana Rocha', 'juliana@gmail.com', '11988880004', 'F', 101, 4),
+('Rafael Lima', 'rafael@gmail.com', '11988880005', 'M', 102, 5);
+
+insert into aula (fkAluno, dataAula, horaAula, presenca, fkAulaAnterior, fkInstrumento) values
+(1, '2026-04-01', '14:00:00', 'PRESENTE', null, 1),
+(1, '2026-04-08', '14:00:00', 'PRESENTE', 1000, 1),
+(2, '2026-04-02', '15:00:00', 'AUSENTE', null, 3),
+(2, '2026-04-09', '15:00:00', 'FALTA JUSTIFICADA', 1002, 3),
+(3, '2026-04-03', '16:00:00', 'PRESENTE', null, 2),
+(4, '2026-04-04', '17:00:00', 'PRESENTE', null, 4),
+(5, '2026-04-05', '18:00:00', 'AUSENTE', null, 5);
+
+-- QUERYS -----------------------------------------------------------------------------------------------
+
+
+
+
