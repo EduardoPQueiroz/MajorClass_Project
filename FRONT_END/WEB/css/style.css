@@ -188,6 +188,107 @@
     width: 300px;
 }
 
+/* LOGIN PAGE */
+
+.loginContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.titleContainer{
+    width: 60%;
+    font-size: 40px;
+    margin-bottom: 20px;
+}
+.loginForm{
+    display: flex;
+    background-color: rgba(216, 228, 255, 0.705);
+    font-size: 30px;
+    color: #140F2D;
+    width: 70%;
+    height: 70%;
+    border-radius: 20px;
+}
+
+.loginForm > img{
+    width:45%;
+    border-radius: 20px 0px 0px 20px;
+}
+
+.inputSection{
+    width: 55%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; 
+}
+
+.inputField{
+    display: flex;
+    flex-direction: column;
+    margin: 10px 0;
+}
+
+::placeholder{
+    font-size: 20px;
+    justify-self: center;
+}
+
+.inpTitle{
+    align-self: flex-start;
+}
+
+.inputField > input{
+    background-color: #D8E4FF;
+    width: 450px;
+    height:40px;
+    border-radius: 20px;
+    border: none;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+.inputSection > button{
+    margin: 40px;
+    background-color: #016FB9;
+    color: #D8E4FF;
+    font-weight: bold;
+    font-size: 20px;
+    width: 100px;
+    height: 40px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer
+}
+
+.inputSection > button:hover{
+    background-color: #D8E4FF;
+    color: #016FB9;
+}
+
+.inputSection > button:active{
+    background-color: #140F2D;
+    color: #D8E4FF;
+}
+
+.linkPageText{
+    font-size: 15px;
+}
+
+
+
+.linkPageText > a{
+    text-decoration: underline;
+    color: #140F2D;
+}
 
 
 
