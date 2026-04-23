@@ -5,6 +5,7 @@
 /* HEADER */
 .header{
     width: 100%;
+    height: 15vh;
     background-color: #140f2d;
     display: flex;
     align-items: center;
@@ -26,8 +27,13 @@
     color: #d8e4ff;
 }
 
+.navBarLink > a > img{
+    width: 40px;
+}
+
 .header > img{
-    width: 10%;
+    width: 6%;
+    margin-left: 30px;
 }
 
 .exitButton{
@@ -35,4 +41,123 @@
     color: #140f2d;
     padding: 8px;
     border-radius: 10px;
+    width: 80px;
 }
+
+.exitButton > a{
+    width: 100%;
+    text-decoration: none;
+    color: #140f2d;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.exitButton:hover{
+    cursor: pointer;
+}
+
+.exitButton:active{
+    background-color: #f3f6ff;
+}
+
+/* MAIN CONTENT */
+.mainSection{
+    background-color: #d8e4ff;
+    width: 100%;
+    height: 85vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.mainSection > h1{
+    font-weight: 500;
+}
+
+.titleContainer{
+    height: 20vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cardsContainer{
+    display: flex;
+    
+}
+
+.cardLink{
+    width: 28vw;
+    height: 65vh;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #140f2d;
+    color: #d8e4ff;
+    margin: 20px;
+    font-size: 40px;
+    
+}
+
+.cardLink > a{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: #d8e4ff;
+}
+
+.cardLink > a > img{
+    width: 200px;    
+}
+
+/* ALUNOS PAGE */
+.topItens{
+    margin: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.topItens > p{
+    margin-left: 10px;
+    font-size: 40px;
+}
+
+.filterSection{
+    display: flex;
+    align-items: center;
+}
+
+.filterSection > img{
+    width: 24px;
+}
+
+.filterSection > select{
+    background-color: #140f2d;
+    border: none;
+    width: 120px;
+    height: 25px;
+    border-radius: 10px;
+    color: #d8e4ff;
+    margin-left: 5px;
+}
+
+.addButton {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+    background-color: #140f2d;
+    color: #d8e4ff;
+    padding: 0 20px 0 20px;
+    border-radius: 10px;
+}
+
+.addButton > img{
+    width: 24px;
+}
+
+

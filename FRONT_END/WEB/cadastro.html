@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MajorClass</title>
+    <title>MajorClass - Cadastro</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -37,15 +37,16 @@
                         <p class="inpTitle">Confirme sua senha: </p>
                         <input type="password" name="" id="passInput" placeholder="********">
                     </div>
-                    <button>CADASTRAR</button>
+                    <button onclick="cadastrar()">CADASTRAR</button>
                     <p class="linkPageText">Já tem uma conta?<a href="login.html">Entrar!</a></p>
                 </div>
             </div>
         </div>
-
     </div>
-
-
 </body>
-
 </html>
+<script>
+    function cadastrar(){
+        window.location = 'login.html'
+    }
+</script>
