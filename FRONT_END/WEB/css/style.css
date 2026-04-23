@@ -216,8 +216,8 @@
 }
 
 .registerForm{
-    height: 85%;
-    width: 85%;
+    height: 80%;
+    width: 80%;
 }
 
 .loginForm > img{
@@ -268,7 +268,7 @@
 
 
 .inputSection > button{
-    margin: 20px 0 5px;
+    margin: 5px 0 5px;
     background-color: #016FB9;
     color: #D8E4FF;
     font-weight: bold;
