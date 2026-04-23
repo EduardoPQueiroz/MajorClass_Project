@@ -117,7 +117,7 @@
 /* ALUNOS PAGE */
 .topItens{
     margin: 20px;
-    width: 100%;
+    width: 91%;
     display: flex;
     justify-content: space-between;
 }
@@ -158,6 +158,40 @@
 
 .addButton > img{
     width: 24px;
+}
+
+.divAluno{
+    margin: 30px 0px;
+    background-color: #140f2d;
+    width: 90vw;
+    height: fit-content;
+    border-radius: 20px;
+    color: #d8e4ff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.topoAluno{
+    font-size: 25px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.topoAluno > p{
+    margin-left: 40px;
+}
+
+.alunoBottom{
+    padding: 10px;
+    display: flex;
+    justify-content: flex-start
+}
+
+.alunoBottom > p{
+    margin-left: 40px;
 }
 
 
