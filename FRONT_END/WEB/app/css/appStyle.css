@@ -120,6 +120,7 @@
     width: 91%;
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 .topItens > p{
@@ -147,16 +148,22 @@
 }
 
 .addButton {
-    display: flex;
-    align-items: center;
     margin-right: 10px;
     background-color: #140f2d;
     color: #d8e4ff;
     padding: 0 20px 0 20px;
     border-radius: 10px;
+    height: 25px;
 }
 
-.addButton > img{
+.addButton > a{
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #d8e4ff;
+}
+
+.addButton > a > img{
     width: 24px;
 }
 
@@ -192,6 +199,58 @@
 
 .alunoBottom > p{
     margin-left: 40px;
+}
+
+/* CADASTRAR ALUNO */
+
+.mainRegister{
+    background-color: #d8e4ff;
+    width: 100%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.mainRegister > h1{
+    margin: 30px 0px;
+    font-weight: 500;
+}
+
+.registerForm{
+    background-color: #140f2d;
+    width: 40%;
+    height: 650px;
+    color: #d8e4ff;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 20px;
+}
+
+.inputField{
+    font-size: 25px;
+}
+
+.inputField > input, .inputField > select{
+    margin: 5px;
+    background-color: #d8e4ff;
+    border: none;
+    border-radius: 10px;
+    width: 30vw;
+    height: 60px;
+}
+
+.registerForm > button{
+    margin-top: 20px;
+    background-color: #016fb9;
+    border: none;
+    height: 40px;
+    border-radius: 10px;
+    color: #d8e4ff;
+    font-size: 18px;
+    font-weight: bold;
 }
 
 
