@@ -12,7 +12,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 30px;
+    font-size: 20px;
 }
 
 .linksHeader > a{
@@ -30,7 +30,7 @@
 
 
 .imgHeader > img{
-    width: 120px;
+    width: 80px;
     margin-left: 20px;
 }
 
