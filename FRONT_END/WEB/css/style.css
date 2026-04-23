@@ -202,8 +202,9 @@
 .titleContainer{
     width: 60%;
     font-size: 40px;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
+
 .loginForm{
     display: flex;
     background-color: rgba(216, 228, 255, 0.705);
@@ -212,6 +213,11 @@
     width: 70%;
     height: 70%;
     border-radius: 20px;
+}
+
+.registerForm{
+    height: 85%;
+    width: 85%;
 }
 
 .loginForm > img{
@@ -245,7 +251,7 @@
 .inputField > input{
     background-color: #D8E4FF;
     width: 450px;
-    height:40px;
+    height:35px;
     border-radius: 20px;
     border: none;
     padding: 10px;
@@ -254,15 +260,20 @@
     justify-content: center;
 }
 
+.inputField > input:focus{
+    background-color: #140F2D;
+    color: #D8E4FF;
+}
+
 
 
 .inputSection > button{
-    margin: 40px;
+    margin: 20px 0 5px;
     background-color: #016FB9;
     color: #D8E4FF;
     font-weight: bold;
     font-size: 20px;
-    width: 100px;
+    width: fit-content;
     height: 40px;
     border: none;
     border-radius: 10px;
@@ -289,6 +300,8 @@
     text-decoration: underline;
     color: #140F2D;
 }
+
+
 
 
 
