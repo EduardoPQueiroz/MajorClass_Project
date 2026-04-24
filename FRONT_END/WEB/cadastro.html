@@ -21,13 +21,14 @@
             <div class="loginForm registerForm">
                 <img src="img/logomarca.png" alt="">
                 <div class="inputSection">
+                    <div id="fieldError"></div>
                     <div class="inputField">
                         <p class="inpTitle">Nome: </p>
-                        <input type="text" name="" id="emailInput" placeholder="Nome Sobrenome">
+                        <input type="text" name="" id="nameInput" placeholder="Nome Sobrenome">
                     </div>
                     <div class="inputField">
                         <p class="inpTitle">Email: </p>
-                        <input type="email" name="" id="passInput" placeholder="email@email.com">
+                        <input type="email" name="" id="emailInput" placeholder="email@email.com">
                     </div>
                     <div class="inputField">
                         <p class="inpTitle">Senha: </p>
@@ -35,18 +36,52 @@
                     </div>
                     <div class="inputField">
                         <p class="inpTitle">Confirme sua senha: </p>
-                        <input type="password" name="" id="passInput" placeholder="********">
+                        <input type="password" name="" id="confirmPassInput" placeholder="********">
                     </div>
                     <button onclick="cadastrar()">CADASTRAR</button>
                     <p class="linkPageText">Já tem uma conta?<a href="login.html">Entrar!</a></p>
                 </div>
             </div>
+
         </div>
     </div>
 </body>
+
 </html>
 <script>
-    function cadastrar(){
-        window.location = 'login.html'
+
+    function validaCampos(){
+        let nomeVar = nameInput.value
+        let emailVar = emailInput.value
+        let passVar = passInput.value
+        let confirmPassVar = confirmPassInput.value
+
+        let camposEmBranco = nomeVar == '' || emailVar == '' || passVar == '' || confirmPassVar == ''
+
+        let emailValido = emailVar.includes("@") && emailVar.includes(".") && emailVar.indexOf('@') < emailVar.lastIndexOf('.')
+
+        let senhaValida = passVar == confirmPassVar
+
+        let cadastro = false
+
+        if (camposEmBranco) {
+            fieldError.innerHTML = "Preencha todos os campos para realizar o cadastro!"
+        } else if(!emailValido){
+            fieldError.innerHTML = "Email inválido inserido!"
+        } else if(!senhaValida){
+            fieldError.innerHTML = "Os campos senha e confimar senha precisam ser iguais!"
+        } else{
+            cadastro = true
+        }
+
+        return cadastro
+    }
+
+    function cadastrar() {
+        let cadastro = validaCampos()
+        if(cadastro){
+            window.location = 'login.html'
+        }
+        
     }
 </script>

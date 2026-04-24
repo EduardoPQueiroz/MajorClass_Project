@@ -190,6 +190,11 @@
 
 /* LOGIN PAGE */
 
+#fieldError{
+    color: red;
+    font-size: 20px;
+}
+
 .loginContainer{
     display: flex;
     flex-direction: column;
@@ -216,8 +221,8 @@
 }
 
 .registerForm{
-    height: 80%;
-    width: 80%;
+    height: 85vh;
+    width: 85vw;
 }
 
 .loginForm > img{

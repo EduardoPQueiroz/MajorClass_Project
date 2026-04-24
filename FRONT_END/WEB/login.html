@@ -21,6 +21,7 @@
             <div class="loginForm">
                 <img src="img/logomarca.png" alt="">
                 <div class="inputSection">
+                    <div id="fieldError"></div>
                     <div class="inputField">
                         <p class="inpTitle">Email: </p>
                         <input type="email" name="" id="emailInput" placeholder="exemplo@exemplo.com">
@@ -38,6 +39,27 @@
 </html>
 <script>
     function entrar(){
-        window.location = './app/initialPage.html'
+        fieldError.innerHTML = ''
+        let emails = ['eduardo.queiroz@sptech.school', 'rafael.lima@sptech.school']
+        let senhas = ['123456', '654321']
+
+        let emailVar = emailInput.value
+        let senhaVar = passInput.value
+
+
+        for(i=0; i<emails.length; i++){
+            if(emails.includes(emailVar)){
+                if(emailVar == emails[i] && senhaVar == senhas[i]){
+                    fieldError.innerHTML = ''
+                    alert("Login realizado com sucesso!")
+                    window.location = './app/initialPage.html'
+                }else{
+                    fieldError.innerHTML = 'Senha incompatível!'
+                }
+            }else{
+                fieldError.innerHTML = 'Email inexistente!'
+            }
+        }
+        
     }
 </script>
