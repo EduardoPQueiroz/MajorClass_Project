@@ -7,7 +7,6 @@ create table professor(
 	idProfessor int auto_increment,
     nome varchar(100) not null,
     email varchar(100) not null,
-    telefone varchar(15),
     senha varchar(30) not null,
     primary key(idProfessor)
 )auto_increment=100;
@@ -34,10 +33,10 @@ create table instrumento(
 	primary key(idInstrumento)
 );
 
-insert into professor (nome, email, telefone, senha) values
-('Carlos Silva', 'carlos@majorclass.com', '11999990001', '123456'),
-('Mariana Souza', 'mariana@majorclass.com', '11999990002', '123456'),
-('João Pereira', 'joao@majorclass.com', '11999990003', '123456');
+insert into professor (nome, email, senha) values
+('Carlos Silva', 'carlos@majorclass.com', '123456'),
+('Mariana Souza', 'mariana@majorclass.com', '123456'),
+('João Pereira', 'joao@majorclass.com', '123456');
 
 create table aula(
 	idAula int auto_increment,
@@ -76,16 +75,39 @@ insert into aluno (nome, email, telefone, sexo, fkProfessor, fkInstrumento) valu
 ('Juliana Rocha', 'juliana@gmail.com', '11988880004', 'F', 101, 4),
 ('Rafael Lima', 'rafael@gmail.com', '11988880005', 'M', 102, 5);
 
-insert into aula (fkAluno, dataAula, horaAula, presenca, fkAulaAnterior, fkInstrumento) values
-(1, '2026-04-01', '14:00:00', 'PRESENTE', null, 1),
-(1, '2026-04-08', '14:00:00', 'PRESENTE', 1000, 1),
-(2, '2026-04-02', '15:00:00', 'AUSENTE', null, 3),
-(2, '2026-04-09', '15:00:00', 'FALTA JUSTIFICADA', 1002, 3),
-(3, '2026-04-03', '16:00:00', 'PRESENTE', null, 2),
-(4, '2026-04-04', '17:00:00', 'PRESENTE', null, 4),
-(5, '2026-04-05', '18:00:00', 'AUSENTE', null, 5);
+insert into aula (fkAluno, dataAula, horaAula, presenca, fkAulaAnterior) values
+(1, '2026-04-01', '14:00:00', 'PRESENTE', null),
+(1, '2026-04-08', '14:00:00', 'PRESENTE', 1000),
+(2, '2026-04-02', '15:00:00', 'AUSENTE', null),
+(2, '2026-04-09', '15:00:00', 'FALTA JUSTIFICADA', 1002),
+(3, '2026-04-03', '16:00:00', 'PRESENTE', null),
+(4, '2026-04-04', '17:00:00', 'PRESENTE', null),
+(5, '2026-04-05', '18:00:00', 'AUSENTE', null);
 
 -- QUERYS -----------------------------------------------------------------------------------------------
+
+-- getAlunosByIdProfessor
+select a.nome, i.nome from aluno a inner join 
+professor p on a.fkProfessor = p.idProfessor inner join
+instrumento i on a.fkInstrumento = i.idInstrumento
+where p.idProfessor = 101;
+
+-- getAulasByIdAluno
+select au.idAula, i.nome, al.nome, au.presenca from aula au 
+inner join aluno al 
+on au.fkAluno = al.idAluno
+inner join instrumento i
+on al.fkInstrumento = i.idInstrumento
+where al.idAluno = 1;
+
+-- getAulasByIdProfessor
+select au.idAula, p.nome, al.nome, i.nome from aula au inner join
+aluno al on au.fkAluno = al.idAluno inner join
+professor p on al.fkProfessor = p.idProfessor inner join
+instrumento i on al.fkInstrumento = i.idInstrumento
+where p.idProfessor = 102;
+
+
 
 
 

@@ -268,3 +268,60 @@
     height: 85vh;
 }
 
+
+/* RELATÓRIOS */
+
+.contentContainer{
+    display: flex;
+    height: 85vh;
+    width: 100%;
+}
+
+/* CHARTS E KPIS */
+
+.chartSection{
+    background-color: #d8e4ff;
+    height: 100%;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+}
+
+.chartContainer{
+    background-color: #140f2d;
+    width: 100px;
+    align-self: center;
+    justify-self: center;
+}
+
+
+/* Menu de links de charts */
+.chartsMenu{
+    background-color: #016fb9;
+    width: 30%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.chartLink{
+    background-color: #140f2d;
+    color: #d8e4ff;
+    width: 70%;
+    height: 15%;
+    margin: 10px 0px;
+    display: flex;
+    align-items: center;
+    border-radius: 20px;
+    font-size: 15px;
+    padding: 0px 20px;
+}
+
+.chartLink > img{
+    width: 20%;
+    margin: 0px 20px 0 0;
+}
+
+
