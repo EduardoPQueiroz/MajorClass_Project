@@ -63,11 +63,11 @@
             </div>
         </div>
         <div class="chartsMenu">
-            <div class="chartLink" href="qtdAlunos.html">
+            <div class="chartLink" onclick="window.location.href='qtdAlunos.html'">
                 <img src="../../img/Interface/Chart_Line.svg" alt="">
                 <p>Quantidade de alunos</p>
             </div>
-            <div class="chartLink" onclick="window.location.href='qtdAulas.html'">
+            <div class="chartLink" >
                 <img src="../../img/Interface/Chart_Line.svg" alt="">
                 <p>Quantidade de aulas</p>
             </div>
@@ -75,11 +75,11 @@
                 <img src="../../img/Interface/Chart_Line.svg" alt="">
                 <p>Quantidade de faltas</p>
             </div>
-            <div class="chartLink" >
+            <div class="chartLink">
                 <img src="../../img/Interface/Chart_Bar_Vertical_01.svg" alt="">
                 <p>Quantidade de aulas / dia da semana</p>
             </div>
-            <div class="chartLink" >
+            <div class="chartLink">
                 <img src="../../img/Interface/Chart_Bar_Vertical_01.svg" alt="">
                 <p>Quantidade de alunos / intrumento</p>
             </div>
@@ -97,10 +97,10 @@
         data: {
             labels: ["Abril", "Maio", "Junho", "Julho", "Agosto"],
             datasets: [{
-                label: 'Quantidade de alunos',
+                label: 'Quantidade de aulas',
                 tension: 0.2,
                 cubicInterpolationMode: 'monotone',
-                data: [2, 6, 5, 9, 12],
+                data: [10, 15, 9, 20, 30],
                 borderWidth: 1
             }]
         },
@@ -110,7 +110,7 @@
             scales: {
                 y: {
                     beginAtZero: true,
-                    max: 14
+                    max: 35
                 }
             }
         }
