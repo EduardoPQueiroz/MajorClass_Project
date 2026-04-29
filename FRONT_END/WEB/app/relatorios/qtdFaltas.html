@@ -46,16 +46,16 @@
         <div class="chartSection">
             <div class="kpisContainer">
                 <div class="kpiCard">
-                    <p>Total de alunos:</p>
-                    <p class="responseKpi">12</p>
+                    <p>Total de aulas no último mês:</p>
+                    <p class="responseKpi">35</p>
                 </div>
                 <div class="kpiCard">
-                    <p>Novos alunos no mês: </p>
-                    <p class="responseKpi">3</p>
+                    <p>Total de faltas no último mês: </p>
+                    <p class="responseKpi">10</p>
                 </div>
                 <div class="kpiCard">
-                    <p>Instrumento com mais aulas:</p>
-                    <p class="responseKpi">TECLADO</p>
+                    <p>Aluno com mais faltas: </p>
+                    <p class="responseKpi">Matheus Vizzas</p>
                 </div>
             </div>
             <div class="chartContainer">
@@ -63,7 +63,7 @@
             </div>
         </div>
         <div class="chartsMenu">
-            <div class="chartLink" href="qtdAlunos.html">
+            <div class="chartLink" onclick="window.location.href='qtdAlunos.html'">
                 <img src="../../img/Interface/Chart_Line.svg" alt="">
                 <p>Quantidade de alunos</p>
             </div>
@@ -71,15 +71,15 @@
                 <img src="../../img/Interface/Chart_Line.svg" alt="">
                 <p>Quantidade de aulas</p>
             </div>
-            <div class="chartLink" onclick="window.location.href='qtdFaltas.html'">
+            <div class="chartLink" >
                 <img src="../../img/Interface/Chart_Line.svg" alt="">
                 <p>Quantidade de faltas</p>
             </div>
-            <div class="chartLink" >
+            <div class="chartLink">
                 <img src="../../img/Interface/Chart_Bar_Vertical_01.svg" alt="">
                 <p>Quantidade de aulas / dia da semana</p>
             </div>
-            <div class="chartLink" >
+            <div class="chartLink">
                 <img src="../../img/Interface/Chart_Bar_Vertical_01.svg" alt="">
                 <p>Quantidade de alunos / intrumento</p>
             </div>
@@ -97,10 +97,10 @@
         data: {
             labels: ["Abril", "Maio", "Junho", "Julho", "Agosto"],
             datasets: [{
-                label: 'Quantidade de alunos',
+                label: 'Quantidade de faltas',
                 tension: 0.2,
                 cubicInterpolationMode: 'monotone',
-                data: [2, 6, 5, 9, 12],
+                data: [3, 0, 1, 5, 7],
                 borderWidth: 1
             }]
         },
@@ -110,7 +110,7 @@
             scales: {
                 y: {
                     beginAtZero: true,
-                    max: 14
+                    max: 10
                 }
             }
         }
