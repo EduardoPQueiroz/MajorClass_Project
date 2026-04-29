@@ -46,16 +46,16 @@
         <div class="chartSection">
             <div class="kpisContainer">
                 <div class="kpiCard">
-                    <p>Dia com mais aulas:</p>
-                    <p class="responseKpi">Terça-Feira</p>
+                    <p>Instrumento com mais aulas:</p>
+                    <p class="responseKpi">TECLADO</p>
                 </div>
                 <div class="kpiCard">
-                    <p>Dia com menos aulas: </p>
-                    <p class="responseKpi">Sexta-feira</p>
+                    <p>Instrumento com menos aulas: </p>
+                    <p class="responseKpi">CONTRABAIXO</p>
                 </div>
                 <div class="kpiCard">
-                    <p>Total de aulas semanais: </p>
-                    <p class="responseKpi">21</p>
+                    <p>Maior demanda por instrumento: </p>
+                    <p class="responseKpi">9</p>
                 </div>
             </div>
             <div class="chartContainer">
@@ -75,11 +75,11 @@
                 <img src="../../img/Interface/Chart_Line.svg" alt="">
                 <p>Quantidade de faltas</p>
             </div>
-            <div class="chartLink">
+            <div class="chartLink" onclick="window.location.href='qtdAulasDiasSemana'">
                 <img src="../../img/Interface/Chart_Bar_Vertical_01.svg" alt="">
                 <p>Quantidade de aulas / dia da semana</p>
             </div>
-            <div class="chartLink" onclick="window.location.href='qtdAlunosInstrumento.html'">
+            <div class="chartLink">
                 <img src="../../img/Interface/Chart_Bar_Vertical_01.svg" alt="">
                 <p>Quantidade de alunos / intrumento</p>
             </div>
@@ -95,12 +95,12 @@
     new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: ["Segunda", "Terça", "Quarta", "Quinta", "Sexta"],
+            labels: ["Teclado", "Violão", "Guitarra", "Contrabaixo"],
             datasets: [{
-                label: 'Quantidade de aulas',
+                label: 'Quantidade de alunos',
                 tension: 0.2,
                 cubicInterpolationMode: 'monotone',
-                data: [5, 8, 3, 4, 1],
+                data: [9, 3, 4, 2],
                 borderWidth: 1
             }]
         },
