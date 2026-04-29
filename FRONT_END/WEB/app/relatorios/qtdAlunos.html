@@ -10,6 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
 </head>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <body>
     <div class="header">
@@ -46,7 +47,7 @@
             <div class="kpisContainer">
                 <div class="kpiCard">
                     <p>Total de alunos:</p>
-                    <p class="responseKpi">10</p>
+                    <p class="responseKpi">12</p>
                 </div>
                 <div class="kpiCard">
                     <p>Total de aulas no mês: </p>
@@ -58,7 +59,7 @@
                 </div>
             </div>
             <div class="chartContainer">
-                <p>GRÁFICO DE QUANTIDADE DE AULAS</p>
+                <canvas id="chartQtdAlunos"></canvas>
             </div>
         </div>
         <div class="chartsMenu">
@@ -88,3 +89,30 @@
 </body>
 
 </html>
+<script>
+    const ctx = document.getElementById('chartQtdAlunos');
+
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ["Abril", "Maio", "Junho", "Julho", "Agosto"],
+            datasets: [{
+                label: 'Quantidade de alunos',
+                tension: 0.2,
+                cubicInterpolationMode: 'monotone',
+                data: [2, 6, 5, 9, 12],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 14
+                }
+            }
+        }
+    });
+</script>

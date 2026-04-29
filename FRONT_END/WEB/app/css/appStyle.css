@@ -299,6 +299,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 10px;
 }
 
 .kpisContainer{
@@ -314,7 +315,7 @@
     background-color: #140f2d;
     color: #d8e4ff;
     margin: 10px;
-    width: 20%;
+    width: 21.8%;
     height: 100%;
     display: flex;
     flex-direction: column;
