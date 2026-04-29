@@ -25,6 +25,7 @@ create table aluno(
     foreign key (fkInstrumento) references instrumento(idInstrumento)
 );
 
+alter table aluno add column dataCadastro date default (current_date());
 
 create table instrumento(
 	idInstrumento int auto_increment,
@@ -75,6 +76,9 @@ insert into aluno (nome, email, telefone, sexo, fkProfessor, fkInstrumento) valu
 ('Juliana Rocha', 'juliana@gmail.com', '11988880004', 'F', 101, 4),
 ('Rafael Lima', 'rafael@gmail.com', '11988880005', 'M', 102, 5);
 
+insert into aluno(nome, email, telefone, sexo, fkProfessor, fkInstrumento, dataCadastro)
+values('Ancelmo Sousa', 'ancelmo@gmail.com', '11988880006', 'M', 102, 5, '2026-03-28');
+
 insert into aula (fkAluno, dataAula, horaAula, presenca, fkAulaAnterior) values
 (1, '2026-04-01', '14:00:00', 'PRESENTE', null),
 (1, '2026-04-08', '14:00:00', 'PRESENTE', 1000),
@@ -84,13 +88,35 @@ insert into aula (fkAluno, dataAula, horaAula, presenca, fkAulaAnterior) values
 (4, '2026-04-04', '17:00:00', 'PRESENTE', null),
 (5, '2026-04-05', '18:00:00', 'AUSENTE', null);
 
+select * from aula;
+
+insert into aula(fkAluno, dataAula, horaAula, presenca, fkAulaAnterior) value
+(1, '2026-04-15', '16:00:00', 'PRESENTE', 1001);
+
 -- QUERYS -----------------------------------------------------------------------------------------------
 
+
+-- TABELA ALUNOS ----------------------------------------------------------------------------
+
+
+
+-- getQtdAlunosPorMes
+select month(dataCadastro) as mes, count(idAluno) from aluno group by mes order by mes; 
+
 -- getAlunosByIdProfessor
-select a.nome, i.nome from aluno a inner join 
+select p.nome as Professor, a.nome as Aluno, i.nome as Instrumento from aluno a inner join 
 professor p on a.fkProfessor = p.idProfessor inner join
 instrumento i on a.fkInstrumento = i.idInstrumento
 where p.idProfessor = 101;
+
+-- getHistoricoAulasByAlunoId
+select al.nome, au.dataAula as ultimaAula, ant.dataAula as dataAnterior from aluno al
+inner join aula au on au.fkAluno = al.idAluno
+left join aula ant on au.fkAulaAnterior = ant.idAula
+where al.idAluno = 1
+order by au.dataAula desc;
+
+-- TABELA AULAS ----------------------------------------------------------------------------
 
 -- getAulasByIdAluno
 select au.idAula, i.nome, al.nome, au.presenca from aula au 
@@ -106,6 +132,9 @@ aluno al on au.fkAluno = al.idAluno inner join
 professor p on al.fkProfessor = p.idProfessor inner join
 instrumento i on al.fkInstrumento = i.idInstrumento
 where p.idProfessor = 102;
+
+-- getQTDfaltas
+select month(dataAula) mes, count(presenca) from aula where presenca = 'AUSENTE' group by mes;
 
 
 
