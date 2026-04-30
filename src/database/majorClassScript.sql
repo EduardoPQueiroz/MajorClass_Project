@@ -1,6 +1,7 @@
 create database majorClass;
 use majorClass;
-
+create database majorclass;
+use majorclass;
 
 -- ESTRUTURA ----------------------------------------------------------
 create table professor(
@@ -18,14 +19,13 @@ create table aluno(
     email varchar(100) not null,
     telefone varchar(15),
     sexo char(1) check (sexo in('M', 'F')),
+    dataCadastro date default(current_date()),
     fkProfessor int not null,
     fkInstrumento int not null,
     primary key(idAluno),
     foreign key (fkProfessor) references professor(idProfessor),
     foreign key (fkInstrumento) references instrumento(idInstrumento)
 );
-
-alter table aluno add column dataCadastro date default (current_date());
 
 create table instrumento(
 	idInstrumento int auto_increment,
@@ -34,27 +34,25 @@ create table instrumento(
 	primary key(idInstrumento)
 );
 
-insert into professor (nome, email, senha) values
-('Carlos Silva', 'carlos@majorclass.com', '123456'),
-('Mariana Souza', 'mariana@majorclass.com', '123456'),
-('João Pereira', 'joao@majorclass.com', '123456');
-
 create table aula(
 	idAula int auto_increment,
-    fkAluno int,
     dataAula date,
     horaAula time,
     presenca varchar(30) check (presenca in('PRESENTE', 'AUSENTE', 'FALTA JUSTIFICADA')),
+    fkAluno int,
     fkAulaAnterior int,
-    fkInstrumento int,
-    primary key(idAula, fkAluno)
+    primary key(idAula)
 )auto_increment=1000;
 
 alter table aula add constraint foreign key (fkAluno) references aluno(idAluno);
 alter table aula add constraint foreign key (fkAulaAnterior) references aula(idAula);
-alter table aula add constraint foreign key (fkInstrumento) references instrumento(idInstrumento);
 
 -- INSERTS -------------------------------------------------------------------------------------------------------
+
+insert into professor (nome, email, senha) values
+('Carlos Silva', 'carlos@majorclass.com', '123456'),
+('Mariana Souza', 'mariana@majorclass.com', '123456'),
+('João Pereira', 'joao@majorclass.com', '123456');
 
 insert into professor (nome, email, telefone, senha) values
 ('Carlos Silva', 'carlos@majorclass.com', '11999990001', '123456'),
