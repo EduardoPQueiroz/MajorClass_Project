@@ -1,6 +1,11 @@
 * {
     margin: 0;
     font-family: 'Outfit';
+    
+}
+
+body{
+    background-color: #d8e4ff;
 }
 
 /* HEADER */
