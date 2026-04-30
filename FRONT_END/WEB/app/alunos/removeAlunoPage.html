@@ -41,43 +41,16 @@
             </div>
         </div>
     </div>
-    <div class="mainRegister">
+    <div class="mainContent">
         <h1>
-            ADICIONAR ALUNO
+            REMOVER ALUNO
         </h1>
-        <div class="registerForm">
-            <div class="inputContainer">
-                <div class="inputField">
-                    <p>Nome completo: </p>
-                    <input type="text" placeholder="Nome Sobrenome">
-                </div>
-                <div class="inputField">
-                    <p>Sexo: </p>
-                    <select name="" id="">
-                        <option value="M">Masculino</option>
-                        <option value="F">Feminino</option>
-                        <option value="O">Outro</option>
-                    </select>
-                </div>
-                <div class="inputField">
-                    <p>Email: </p>
-                    <input type="text" placeholder="email@exemplo.com">
-                </div>
-                <div class="inputField">
-                    <p>Telefone: </p>
-                    <input type="text" placeholder="11987654321">
-                </div>
-                <div class="inputField">
-                    <p>Instrumento: </p>
-                    <select name="" id="">
-                        <option value="">Teclado</option>
-                        <option value="">Violão</option>
-                        <option value="">Guitarra</option>
-                        <option value="">Contrabaixo</option>
-                    </select>
-                </div>
+        <div class="registerForm removeCard">
+            <p>VOCÊ TEM CERTEZA QUE DESEJA REMOVER ESSE ALUNO?</p>
+            <div class="btnsContainer">
+                <button id="btnCancelar" onclick="window.location.href='alunosPage.html'">CANCELAR</button>
+                <button id="btnRemover" onclick="window.location.href='alunosPage.html'">REMOVER ALUNO</button>
             </div>
-            <button onclick="window.location.href='alunosPage.html'">ADICIONAR ALUNO</button>
         </div>
     </div>
 </body>

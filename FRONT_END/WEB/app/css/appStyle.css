@@ -1,9 +1,10 @@
-*{
+* {
     margin: 0;
     font-family: 'Outfit';
 }
+
 /* HEADER */
-.header{
+.header {
     width: 100%;
     height: 15vh;
     background-color: #140f2d;
@@ -12,13 +13,13 @@
     justify-content: space-between;
 }
 
-.linksContainer{
+.linksContainer {
     display: flex;
     align-items: center;
     margin-right: 30px;
 }
 
-.navBarLink > a{
+.navBarLink>a {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -27,16 +28,16 @@
     color: #d8e4ff;
 }
 
-.navBarLink > a > img{
+.navBarLink>a>img {
     width: 40px;
 }
 
-.header > img{
+.header>img {
     width: 6%;
     margin-left: 30px;
 }
 
-.exitButton{
+.exitButton {
     background-color: #d8e4ff;
     color: #140f2d;
     padding: 8px;
@@ -44,7 +45,7 @@
     width: 80px;
 }
 
-.exitButton > a{
+.exitButton>a {
     width: 100%;
     text-decoration: none;
     color: #140f2d;
@@ -53,16 +54,16 @@
     justify-content: space-around;
 }
 
-.exitButton:hover{
+.exitButton:hover {
     cursor: pointer;
 }
 
-.exitButton:active{
+.exitButton:active {
     background-color: #f3f6ff;
 }
 
 /* MAIN CONTENT */
-.mainSection{
+.mainSection {
     background-color: #d8e4ff;
     width: 100%;
     height: 100%;
@@ -71,23 +72,23 @@
     align-items: center;
 }
 
-.mainSection > h1{
+.mainSection>h1 {
     font-weight: 500;
 }
 
-.titleContainer{
+.titleContainer {
     height: 20vh;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.cardsContainer{
+.cardsContainer {
     display: flex;
-    
+
 }
 
-.cardLink{
+.cardLink {
     width: 28vw;
     height: 65vh;
     border-radius: 30px;
@@ -99,10 +100,10 @@
     color: #d8e4ff;
     margin: 20px;
     font-size: 40px;
-    
+
 }
 
-.cardLink > a{
+.cardLink>a {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -110,12 +111,12 @@
     color: #d8e4ff;
 }
 
-.cardLink > a > img{
-    width: 200px;    
+.cardLink>a>img {
+    width: 200px;
 }
 
 /* ALUNOS PAGE */
-.topItens{
+.topItens {
     margin: 20px;
     width: 91%;
     display: flex;
@@ -123,21 +124,21 @@
     align-items: center;
 }
 
-.topItens > p{
+.topItens>p {
     margin-left: 10px;
     font-size: 40px;
 }
 
-.filterSection{
+.filterSection {
     display: flex;
     align-items: center;
 }
 
-.filterSection > img{
+.filterSection>img {
     width: 24px;
 }
 
-.filterSection > select{
+.filterSection>select {
     background-color: #140f2d;
     border: none;
     width: 120px;
@@ -156,22 +157,22 @@
     height: 25px;
 }
 
-.addButton > a{
+.addButton>a {
     display: flex;
     align-items: center;
     text-decoration: none;
     color: #d8e4ff;
 }
 
-.addButton > a > img{
+.addButton>a>img {
     width: 24px;
 }
 
-.containerAlunos > a{
+.containerAlunos>a {
     text-decoration: none;
 }
 
-.divAluno{
+.divAluno {
     margin: 30px 0px;
     background-color: #140f2d;
     width: 90vw;
@@ -183,7 +184,7 @@
     justify-content: center;
 }
 
-.topoAluno{
+.topoAluno {
     font-size: 25px;
     padding: 10px;
     display: flex;
@@ -191,23 +192,28 @@
     justify-content: space-between;
 }
 
-.topoAluno > p{
+.topoAluno>p , .topoAluno>div>p{
     margin-left: 40px;
 }
 
-.alunoBottom{
+.topoAluno>p:hover,
+.imgsContainer>img:hover {
+    cursor: pointer;
+}
+
+.alunoBottom {
     padding: 10px;
     display: flex;
     justify-content: flex-start
 }
 
-.alunoBottom > p{
+.alunoBottom>p {
     margin-left: 40px;
 }
 
 /* CADASTRAR ALUNO */
 
-.mainRegister{
+.mainRegister {
     background-color: #d8e4ff;
     width: 100%;
     height: 80%;
@@ -216,12 +222,12 @@
     align-items: center;
 }
 
-.mainRegister > h1{
+.mainRegister>h1 {
     margin: 30px 0 10px 0;
     font-weight: 500;
 }
 
-.registerForm{
+.registerForm {
     background-color: #140f2d;
     width: 40%;
     height: 90vh;
@@ -234,11 +240,16 @@
     margin: 20px;
 }
 
-.inputField{
+.formCadastro {
+    height: 60vh;
+}
+
+.inputField {
     font-size: 25px;
 }
 
-.inputField > input, .inputField > select{
+.inputField>input,
+.inputField>select {
     margin: 5px;
     background-color: #d8e4ff;
     border: none;
@@ -247,7 +258,7 @@
     height: 60px;
 }
 
-.registerForm > button{
+.registerForm>button {
     margin-top: 20px;
     background-color: #016fb9;
     border: none;
@@ -258,9 +269,15 @@
     font-weight: bold;
 }
 
+.registerForm>button:hover {
+    cursor: pointer;
+    background-color: #d8e4ff;
+    color: #140f2d;
+}
+
 /* Historico aluno */
 
-.mainContent{
+.mainContent {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -268,10 +285,45 @@
     height: 85vh;
 }
 
+/* REMOVER ALUNO */
+
+.removeCard {
+    height: 40vh;
+    font-size: 20px;
+}
+
+.btnsContainer {
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+}
+
+#btnRemover{
+    background-color: #d40606;
+}
+
+#btnCancelar{
+    background-color: #6d6d6d;
+}
+
+.btnsContainer>button {
+    margin-top: 20px;
+    background-color: #016fb9;
+    border: none;
+    height: 40px;
+    border-radius: 10px;
+    color: #d8e4ff;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.btnsContainer > button:hover{
+    cursor: pointer;
+}
 
 /* RELATÓRIOS */
 
-.contentContainer{
+.contentContainer {
     display: flex;
     height: 85vh;
     width: 100%;
@@ -279,7 +331,7 @@
 
 /* CHARTS E KPIS */
 
-.chartSection{
+.chartSection {
     background-color: #d8e4ff;
     height: 100%;
     width: 90%;
@@ -289,7 +341,7 @@
     align-items: center;
 }
 
-.chartContainer{
+.chartContainer {
     border-radius: 20px;
     background-color: #140f2d;
     margin-top: 25px;
@@ -302,14 +354,14 @@
     padding: 10px;
 }
 
-.kpisContainer{
+.kpisContainer {
     display: flex;
     justify-content: space-around;
     width: 100%;
     height: 20%;
 }
 
-.kpiCard{
+.kpiCard {
     padding: 3px;
     border-radius: 20px;
     background-color: #140f2d;
@@ -324,13 +376,13 @@
     font-size: 15px;
 }
 
-.responseKpi{
+.responseKpi {
     font-size: 30px;
 }
 
 
 /* Menu de links de charts */
-.chartsMenu{
+.chartsMenu {
     background-color: #016fb9;
     width: 30%;
     height: 100%;
@@ -340,7 +392,7 @@
     justify-content: center;
 }
 
-.chartLink{
+.chartLink {
     background-color: #140f2d;
     color: #d8e4ff;
     width: 70%;
@@ -353,14 +405,11 @@
     padding: 0px 20px;
 }
 
-.chartLink:hover{
+.chartLink:hover {
     cursor: pointer;
 }
 
-.chartLink > img{
+.chartLink>img {
     width: 20%;
     margin: 0px 20px 0 0;
 }
-
-
-

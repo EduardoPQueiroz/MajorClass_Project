@@ -101,7 +101,7 @@ insert into aula(fkAluno, dataAula, horaAula, presenca, fkAulaAnterior) value
 
 
 -- getQtdAlunosPorMes
-select month(dataCadastro) as mes, count(idAluno) from aluno group by mes order by mes; 
+select month(dataCadastro) as mes, count(idAluno) as novosAlunos from aluno group by mes order by mes; 
 
 -- getAlunosByIdProfessor
 select p.nome as Professor, a.nome as Aluno, i.nome as Instrumento from aluno a inner join 
@@ -110,7 +110,7 @@ instrumento i on a.fkInstrumento = i.idInstrumento
 where p.idProfessor = 101;
 
 -- getHistoricoAulasByAlunoId
-select al.nome, au.dataAula as ultimaAula, ant.dataAula as dataAnterior from aluno al
+select al.nome, au.dataAula as ultimaAula, ant.dataAula as aulaAnterior from aluno al
 inner join aula au on au.fkAluno = al.idAluno
 left join aula ant on au.fkAulaAnterior = ant.idAula
 where al.idAluno = 1
@@ -133,8 +133,25 @@ professor p on al.fkProfessor = p.idProfessor inner join
 instrumento i on al.fkInstrumento = i.idInstrumento
 where p.idProfessor = 102;
 
--- getQTDfaltas
-select month(dataAula) mes, count(presenca) from aula where presenca = 'AUSENTE' group by mes;
+-- getQTDfaltasMes
+select month(dataAula) mes, count(presenca) as numeroFaltas from aula where presenca = 'AUSENTE' group by mes;
+
+-- getQtdFaltasAlunoMes
+select al.nome, month(au.dataAula) mes, count(presenca) as numeroFaltas from aula au 
+inner join aluno al
+on au.fkAluno = al.idAluno 
+where presenca = 'AUSENTE' 
+group by al.nome, mes;
+
+-- getQtdFaltasAlunoGeral
+select al.nome, count(presenca) as numeroFaltas from aula au 
+inner join aluno al
+on au.fkAluno = al.idAluno 
+where presenca = 'AUSENTE' 
+group by al.nome;
+
+SET lc_time_names = 'pt_BR';
+select DATE_FORMAT(dataAula, '%W') as diaSemana from aula;
 
 
 
