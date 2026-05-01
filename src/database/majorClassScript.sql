@@ -1,7 +1,6 @@
 create database majorClass;
 use majorClass;
-create database majorclass;
-use majorclass;
+
 
 -- ESTRUTURA ----------------------------------------------------------
 create table professor(
@@ -12,6 +11,12 @@ create table professor(
     primary key(idProfessor)
 )auto_increment=100;
 
+create table instrumento(
+	idInstrumento int auto_increment,
+    nome varchar(50),
+    tipoInstrumento varchar(10) check (tipoInstrumento in('CORDAS', 'TECLAS', 'PERCUSSAO', 'SOPRO')),
+	primary key(idInstrumento)
+);
 
 create table aluno(
 	idAluno int auto_increment,
@@ -25,13 +30,6 @@ create table aluno(
     primary key(idAluno),
     foreign key (fkProfessor) references professor(idProfessor),
     foreign key (fkInstrumento) references instrumento(idInstrumento)
-);
-
-create table instrumento(
-	idInstrumento int auto_increment,
-    nome varchar(50),
-    tipoInstrumento varchar(10) check (tipoInstrumento in('CORDAS', 'TECLAS', 'PERCUSSAO', 'SOPRO')),
-	primary key(idInstrumento)
 );
 
 create table aula(
@@ -50,14 +48,10 @@ alter table aula add constraint foreign key (fkAulaAnterior) references aula(idA
 -- INSERTS -------------------------------------------------------------------------------------------------------
 
 insert into professor (nome, email, senha) values
-('Carlos Silva', 'carlos@majorclass.com', '123456'),
-('Mariana Souza', 'mariana@majorclass.com', '123456'),
-('João Pereira', 'joao@majorclass.com', '123456');
+('Rubens Silva', 'rubens@majorclass.com', '123456'),
+('Melina Souza', 'melina@majorclass.com', '123456'),
+('Juliana Pereira', 'juliana@majorclass.com', '123456');
 
-insert into professor (nome, email, telefone, senha) values
-('Carlos Silva', 'carlos@majorclass.com', '11999990001', '123456'),
-('Mariana Souza', 'mariana@majorclass.com', '11999990002', '123456'),
-('João Pereira', 'joao@majorclass.com', '11999990003', '123456');
 
 insert into instrumento (nome, tipoInstrumento) values
 ('Violão', 'CORDAS'),
@@ -68,14 +62,11 @@ insert into instrumento (nome, tipoInstrumento) values
 ('Flauta', 'SOPRO');
 
 insert into aluno (nome, email, telefone, sexo, fkProfessor, fkInstrumento) values
-('Lucas Andrade', 'lucas@gmail.com', '11988880001', 'M', 100, 1),
-('Ana Clara', 'ana@gmail.com', '11988880002', 'F', 100, 3),
-('Pedro Henrique', 'pedro@gmail.com', '11988880003', 'M', 101, 2),
-('Juliana Rocha', 'juliana@gmail.com', '11988880004', 'F', 101, 4),
-('Rafael Lima', 'rafael@gmail.com', '11988880005', 'M', 102, 5);
-
-insert into aluno(nome, email, telefone, sexo, fkProfessor, fkInstrumento, dataCadastro)
-values('Ancelmo Sousa', 'ancelmo@gmail.com', '11988880006', 'M', 102, 5, '2026-03-28');
+('Matheus Vizzas', 'matheus@gmail.com', '11988880001', 'M', 100, 1),
+('Rafael Santanas', 'rafael@gmail.com', '11988880002', 'F', 100, 3),
+('Ancelmo Sousas', 'ancelmo@gmail.com', '11988880003', 'M', 101, 2),
+('Gabriel Carreira', 'gabriel@gmail.com', '11988880004', 'F', 101, 4),
+('Arthur Pedroso', 'arthur@gmail.com', '11988880005', 'M', 102, 5);
 
 insert into aula (fkAluno, dataAula, horaAula, presenca, fkAulaAnterior) values
 (1, '2026-04-01', '14:00:00', 'PRESENTE', null),
@@ -85,11 +76,6 @@ insert into aula (fkAluno, dataAula, horaAula, presenca, fkAulaAnterior) values
 (3, '2026-04-03', '16:00:00', 'PRESENTE', null),
 (4, '2026-04-04', '17:00:00', 'PRESENTE', null),
 (5, '2026-04-05', '18:00:00', 'AUSENTE', null);
-
-select * from aula;
-
-insert into aula(fkAluno, dataAula, horaAula, presenca, fkAulaAnterior) value
-(1, '2026-04-15', '16:00:00', 'PRESENTE', 1001);
 
 -- QUERYS -----------------------------------------------------------------------------------------------
 

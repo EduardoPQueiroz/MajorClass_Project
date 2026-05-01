@@ -10,6 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
 </head>
+<script src="js/sessao.js"></script>
 
 <body>
 
@@ -30,36 +31,94 @@
                         <p class="inpTitle">Senha: </p>
                         <input type="password" name="" id="passInput" placeholder="********">
                     </div>
-                    <button onclick="entrar()">ENTRAR</button>
+                    <button type="button" onclick="entrar()">ENTRAR</button>
                     <p class="linkPageText">Não tem uma conta? <a href="cadastro.html">Cadastre-se!</a></p>
                 </div>
             </div>
         </div>
 </body>
+
 </html>
 <script>
-    function entrar(){
-        fieldError.innerHTML = ''
-        let emails = ['eduardo.queiroz@sptech.school', 'rafael.lima@sptech.school']
-        let senhas = ['123456', '654321']
+    // function entrar(){
+    //     fieldError.innerHTML = ''
+    //     let emails = ['eduardo.queiroz@sptech.school', 'rafael.lima@sptech.school']
+    //     let senhas = ['123456', '654321']
 
-        let emailVar = emailInput.value
-        let senhaVar = passInput.value
+    //     let emailVar = emailInput.value
+    //     let senhaVar = passInput.value
 
 
-        for(i=0; i<emails.length; i++){
-            if(emails.includes(emailVar)){
-                if(emailVar == emails[i] && senhaVar == senhas[i]){
-                    fieldError.innerHTML = ''
-                    alert("Login realizado com sucesso!")
-                    window.location = './app/initialPage.html'
-                }else{
-                    fieldError.innerHTML = 'Senha incompatível!'
-                }
-            }else{
-                fieldError.innerHTML = 'Email inexistente!'
-            }
+    //     for(i=0; i<emails.length; i++){
+    //         if(emails.includes(emailVar)){
+    //             if(emailVar == emails[i] && senhaVar == senhas[i]){
+    //                 fieldError.innerHTML = ''
+    //                 alert("Login realizado com sucesso!")
+    //                 window.location = './app/initialPage.html'
+    //             }else{
+    //                 fieldError.innerHTML = 'Senha incompatível!'
+    //             }
+    //         }else{
+    //             fieldError.innerHTML = 'Email inexistente!'
+    //         }
+    //     }
+
+    // }
+
+    function entrar() {
+
+        var emailVar = emailInput.value;
+        var senhaVar = passInput.value;
+
+        if (emailVar == "" || senhaVar == "") {
+            fieldError.innerHTML = "Preencha todos os campos em branco"
+            return false;
+        } else {
+            fieldError.innerHTML = ''
         }
-        
+
+        console.log("FORM LOGIN: ", emailVar);
+        console.log("FORM SENHA: ", senhaVar);
+
+        fetch("/professores/autenticar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                emailServer: emailVar,
+                senhaServer: senhaVar
+            })
+        }).then(function (resposta) {
+            console.log("ESTOU NO THEN DO entrar()!")
+
+            if (resposta.ok) {
+                console.log(resposta);
+
+                resposta.json().then(json => {
+                    console.log(json);
+                    console.log(JSON.stringify(json));
+                    sessionStorage.EMAIL_USUARIO = json.email;
+                    sessionStorage.NOME_USUARIO = json.nome;
+                    sessionStorage.ID_USUARIO = json.idProfessor;
+
+                    window.location.href = "/app/initialPage.html";
+
+                });
+
+            } else {
+
+                console.log("Houve um erro ao tentar realizar o login!");
+
+                resposta.text().then(texto => {
+                    console.error(texto);
+                });
+            }
+
+        }).catch(function (erro) {
+            console.log(erro);
+        })
+
+        return false;
     }
 </script>
