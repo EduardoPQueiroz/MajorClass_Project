@@ -50,7 +50,7 @@
 </html>
 <script>
 
-    function validaCampos(){
+    function validaCampos() {
         let nomeVar = nameInput.value
         let emailVar = emailInput.value
         let passVar = passInput.value
@@ -66,11 +66,11 @@
 
         if (camposEmBranco) {
             fieldError.innerHTML = "Preencha todos os campos para realizar o cadastro!"
-        } else if(!emailValido){
+        } else if (!emailValido) {
             fieldError.innerHTML = "Email inválido inserido!"
-        } else if(!senhaValida){
+        } else if (!senhaValida) {
             fieldError.innerHTML = "Os campos senha e confimar senha precisam ser iguais!"
-        } else{
+        } else {
             cadastro = true
         }
 
@@ -78,10 +78,43 @@
     }
 
     function cadastrar() {
-        let cadastro = validaCampos()
-        if(cadastro){
-            window.location = 'login.html'
+        var nomeVar = nameInput.value;
+        var emailVar = emailInput.value;
+        var senhaVar = passInput.value;
+        var confirmacaoSenhaVar = confirmPassInput.value;
+        let camposValidados = validaCampos()
+        if (camposValidados) {
+            fetch("/professores/cadastrar", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    nomeServer: nomeVar,
+                    emailServer: emailVar,
+                    senhaServer: senhaVar,
+                }),
+            })
+                .then(function (resposta) {
+                    console.log("resposta: ", resposta);
+
+                    if (resposta.ok) {
+                        fieldError.style.color = "#f4f4f4";
+
+                        fieldError.innerHTML =
+                            "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
+
+                        window.location.href='login.html'
+
+                    } else {
+                        throw "Houve um erro ao tentar realizar o cadastro!";
+                    }
+                })
+                .catch(function (resposta) {
+                    console.log(`#ERRO: ${resposta}`);
+                });
+
+            return false;
         }
-        
     }
 </script>
