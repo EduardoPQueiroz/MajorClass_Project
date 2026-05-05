@@ -80,7 +80,7 @@
                 <p>Quantidade de aulas / dia da semana</p>
             </div>
             <div class="chartLink">
-                <img src="../../img/Interface/Chart_Bar_Vertical_01.svg" alt="">
+                <img src="../../img/doughnut.png" alt="">
                 <p>Quantidade de alunos / intrumento</p>
             </div>
         </div>
@@ -93,7 +93,7 @@
     const ctx = document.getElementById('chartQtdAlunos');
 
     new Chart(ctx, {
-        type: 'bar',
+        type: 'doughnut',
         data: {
             labels: ["Teclado", "Violão", "Guitarra", "Contrabaixo"],
             datasets: [{
@@ -101,6 +101,12 @@
                 tension: 0.2,
                 cubicInterpolationMode: 'monotone',
                 data: [9, 3, 4, 2],
+                backgroundColor: [
+                    'rgba(2, 2, 64, 0.7)',
+                    'rgba(2, 255, 255, 0.5)',
+                    'rgba(0, 127, 255, 0.7)',
+                    'rgba(99, 0, 255, 0.7)'
+                ],
                 borderWidth: 1
             }]
         },
