@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
 </head>
 
-<body>
+<body onload="exibirAlunos()">
     <div class="header">
         <img src="../../img/LOGOIMAGE_INVERTIDO.png" alt="" onclick="window.location.href='../initialPage.html'">
         <div class="linksContainer">
@@ -58,64 +58,32 @@
                 </a>
             </div>
         </div>
-        <div class="containerAlunos">
+        <div class="containerAlunos" id="cardAlunos">
 
-            <div class="divAluno">
-                <div class="topoAluno">
-                    <p onclick="window.location.href='historicoAlunoPage.html'">Matheus Vizzas</p>
-                    <div class="imgsContainer">
-                        <img onclick="window.location.href='removeAlunoPage.html'"
-                            src="../../img/Edit/Remove_Minus_Circle.svg" alt="">
-                        <img onclick="window.location.href='editAlunosPage.html'" src="../../img/Edit/Edit_Pencil_01.svg" alt="">
-                    </div>
-                </div>
-                <div class="alunoBottom">
-                    <p>Instrumento: <span>Teclado</span></p>
-                    <p>Telefone: <span>11987654321</span></p>
-                </div>
-            </div>
-
-            <div class="divAluno" >
-                <div class="topoAluno">
-                    <p onclick="window.location.href='historicoAlunoPage.html'">Rafael Santanas</p>
-                    <div class="imgsContainer">
-                        <img onclick="window.location.href='removeAlunoPage.html'" src="../../img/Edit/Remove_Minus_Circle.svg" alt="">
-                        <img onclick="window.location.href='editAlunosPage.html'" src="../../img/Edit/Edit_Pencil_01.svg" alt="">
-                    </div>
-                </div>
-                <div class="alunoBottom">
-                    <p>Instrumento: <span>Violão</span></p>
-                    <p>Telefone: <span>11987654231</span></p>
-                </div>
-            </div>
-            <div class="divAluno" >
-                <div class="topoAluno">
-                    <p onclick="window.location.href='historicoAlunoPage.html'">Ancelmo Santos</p>
-                    <div class="imgsContainer">
-                        <img onclick="window.location.href='removeAlunoPage.html'" src="../../img/Edit/Remove_Minus_Circle.svg" alt="">
-                        <img onclick="window.location.href='editAlunosPage.html'" src="../../img/Edit/Edit_Pencil_01.svg" alt="">
-                    </div>
-                </div>
-                <div class="alunoBottom">
-                    <p>Instrumento: <span>Guitarra</span></p>
-                    <p>Telefone: <span>11987654321</span></p>
-                </div>
-            </div>
-            <div class="divAluno">
-                <div class="topoAluno">
-                    <p onclick="window.location.href='historicoAlunoPage.html'">Gabriel Carreira</p>
-                    <div class="imgsContainer">
-                        <img onclick="window.location.href='removeAlunoPage.html'" src="../../img/Edit/Remove_Minus_Circle.svg" alt="">
-                        <img onclick="window.location.href='editAlunosPage.html'" src="../../img/Edit/Edit_Pencil_01.svg" alt="">
-                    </div>
-                </div>
-                <div class="alunoBottom">
-                    <p>Instrumento: <span>Contrabaixo</span></p>
-                    <p>Telefone: <span>11987654321</span></p>
-                </div>
-            </div>
         </div>
     </div>
 </body>
 
 </html>
+<script>
+    function exibirAlunos() {
+        JSON.parse(sessionStorage.ALUNOS).forEach(item => {
+            document.getElementById("cardAlunos").innerHTML += `
+                    <div class="divAluno">
+                        <div class="topoAluno">
+                            <p onclick="window.location.href='historicoAlunoPage.html'">${item.nome}</p>
+                            <div class="imgsContainer">
+                                <img onclick="window.location.href='removeAlunoPage.html'"
+                                    src="../../img/Edit/Remove_Minus_Circle.svg" alt="">
+                                <img onclick="window.location.href='editAlunosPage.html'" src="../../img/Edit/Edit_Pencil_01.svg" alt="">
+                            </div>
+                        </div>
+                        <div class="alunoBottom">
+                            <p>Instrumento: <span>${item.instrumento}</span></p>
+                            <p>Telefone: <span>${item.telefone}</span></p>
+                        </div>
+                    </div>
+                    `
+        });
+    }
+</script>

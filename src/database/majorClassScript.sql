@@ -83,15 +83,19 @@ insert into aula (fkAluno, dataAula, horaAula, presenca, fkAulaAnterior) values
 -- TABELA ALUNOS ----------------------------------------------------------------------------
 
 
-
 -- getQtdAlunosPorMes
-select month(dataCadastro) as mes, count(idAluno) as novosAlunos from aluno group by mes order by mes; 
+select monthname(dataCadastro) as mes, count(idAluno) as novosAlunos
+    from aluno 
+    where fkProfessor = 101
+    group by mes order by mes; 
 
 -- getAlunosByIdProfessor
-select p.nome as Professor, a.nome as Aluno, i.nome as Instrumento from aluno a inner join 
-professor p on a.fkProfessor = p.idProfessor inner join
-instrumento i on a.fkInstrumento = i.idInstrumento
-where p.idProfessor = 101;
+select a.*, i.nome as Instrumento, au.* from aluno a inner join
+instrumento i on a.fkInstrumento = i.idInstrumento inner join
+aula au on au.fkAluno = a.idAluno
+where a.fkProfessor = 100;
+
+SELECT * FROM aluno a WHERE fkProfessor = 100;
 
 -- getHistoricoAulasByAlunoId
 select al.nome, au.dataAula as ultimaAula, ant.dataAula as aulaAnterior from aluno al
