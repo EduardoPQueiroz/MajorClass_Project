@@ -2,9 +2,8 @@ var database = require("../database/config");
 
 function buscarAlunosPorProfessor(idProfessor) {
 
-    var instrucaoSql = `select a.*, i.nome as instrumento, au.* from aluno a inner join
-                        instrumento i on a.fkInstrumento = i.idInstrumento inner join
-                        aula au on au.fkAluno = a.idAluno
+    var instrucaoSql = `select a.*, i.nome as instrumento from aluno a inner join
+                        instrumento i on a.fkInstrumento = i.idInstrumento 
                         where a.fkProfessor = ${idProfessor};`;
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);

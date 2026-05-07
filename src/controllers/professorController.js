@@ -25,7 +25,7 @@ function autenticar(req, res) {
                             .then((resultadoAlunos) => {
                                 console.log(`\nAlunos encontrados: ${JSON.stringify(resultadoAlunos)}`)
                                 res.json({
-                                    id: resultadoAutenticar[0].idProfessor,
+                                    idProfessor: resultadoAutenticar[0].idProfessor,
                                     email: resultadoAutenticar[0].email,
                                     nome: resultadoAutenticar[0].nome,
                                     senha: resultadoAutenticar[0].senha,

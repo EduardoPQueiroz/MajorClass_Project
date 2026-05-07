@@ -59,7 +59,7 @@
             </div>
         </div>
         <div class="containerAlunos" id="cardAulas">
-            
+
         </div>
     </div>
 </body>
@@ -67,26 +67,45 @@
 </html>
 <script>
     function exibirAulas() {
-        JSON.parse(sessionStorage.ALUNOS).forEach(item => {
-            document.getElementById("cardAulas").innerHTML += `
-                    <div class="divAluno">
-                        <div class="topoAluno">
-                            <div>
-                                <p>${item.nome} - ${item.instrumento}</p>
+        console.log(sessionStorage.ID_USUARIO)
+        fetch(`/aulas/getAulasByProfessor/${sessionStorage.ID_USUARIO}`).then(function (resposta) {
+            if (resposta.ok) {
+                console.log("Dados recebidos: ", JSON.stringify(resposta));
+                resposta.json().then(function (resposta) {
+                    for(i=0; i<resposta.length; i++){
+                        let data = new Date(resposta[i].dataAula)
+                        console.log(data)
+                        let dataFormatada = data.toLocaleDateString('pt-br')
+
+                        document.getElementById("cardAulas").innerHTML += `
+                            <div class="divAluno">
+                                <div class="topoAluno">
+                                    <div>
+                                        <p>${resposta[i].nomeAluno} - ${resposta[i].nomeInstrumento}</p>
+                                    </div>
+                                    <div class="imgsContainer">
+                                        <img onclick="window.location.href='removeAulaPage.html'"
+                                            src="../../img/Edit/Remove_Minus_Circle.svg" alt="">
+                                        <img onclick="window.location.href='editAulas.html'" src="../../img/Edit/Edit_Pencil_01.svg"
+                                            alt="">
+                                    </div>
+                                </div>
+                                <div class="alunoBottom">
+                                    <p>Data: <span>${dataFormatada}</span></p>
+                                    <p>Hora: <span>${resposta[i].horaAula}</span></p>
+                                </div>
                             </div>
-                            <div class="imgsContainer">
-                                <img onclick="window.location.href='removeAulaPage.html'"
-                                    src="../../img/Edit/Remove_Minus_Circle.svg" alt="">
-                                <img onclick="window.location.href='editAulas.html'" src="../../img/Edit/Edit_Pencil_01.svg"
-                                    alt="">
-                            </div>
-                        </div>
-                        <div class="alunoBottom">
-                            <p>Data: <span>${item.dataAula}</span></p>
-                            <p>Hora: <span>${item.horaAula}</span></p>
-                        </div>
-                    </div>
-                    `
+                            `
+                    };
+                });
+            } else {
+                throw ('Houve um erro na API!');
+            }
+        }).catch(function (resposta) {
+            console.error(resposta);
         });
+
+
+
     }
 </script>
