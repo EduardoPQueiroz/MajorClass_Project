@@ -18,6 +18,8 @@ var app = express();
 var indexRouter = require("./src/routes/index");
 var professorRouter = require("./src/routes/professores");
 var aulasRouter = require("./src/routes/aulas")
+var alunosRouter = require("./src/routes/alunos")
+var instrumentosRouter = require("./src/routes/instrumentos")
 // var avisosRouter = require("./src/routes/avisos");
 
 // var medidasRouter = require("./src/routes/medidas");
@@ -33,6 +35,8 @@ app.use(cors());
 app.use("/", indexRouter);
 app.use("/professores", professorRouter);
 app.use("/aulas", aulasRouter);
+app.use("/alunos", alunosRouter)
+app.use('/instrumentos', instrumentosRouter)
 // app.use("/avisos", avisosRouter);
 // app.use("/medidas", medidasRouter);
 // app.use("/aquarios", aquariosRouter);

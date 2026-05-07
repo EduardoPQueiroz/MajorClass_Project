@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
 </head>
 
-<body>
+<body onload="buscarInstrumentos()">
     <div class="header">
         <img src="../../img/LOGOIMAGE_INVERTIDO.png" alt="" onclick="window.location.href='../initialPage.html'">
         <div class="linksContainer">
@@ -49,11 +49,11 @@
             <div class="inputContainer">
                 <div class="inputField">
                     <p>Nome completo: </p>
-                    <input type="text" placeholder="Nome Sobrenome">
+                    <input type="text" placeholder="Nome Sobrenome" id="nameInput">
                 </div>
                 <div class="inputField">
                     <p>Sexo: </p>
-                    <select name="" id="">
+                    <select name="" id="selectSexo">
                         <option value="M">Masculino</option>
                         <option value="F">Feminino</option>
                         <option value="O">Outro</option>
@@ -61,25 +61,64 @@
                 </div>
                 <div class="inputField">
                     <p>Email: </p>
-                    <input type="text" placeholder="email@exemplo.com">
+                    <input type="text" placeholder="email@exemplo.com" id="emailInput">
                 </div>
                 <div class="inputField">
                     <p>Telefone: </p>
-                    <input type="text" placeholder="11987654321">
+                    <input type="text" placeholder="11987654321" id="telefoneInput">
                 </div>
                 <div class="inputField">
                     <p>Instrumento: </p>
-                    <select name="" id="">
-                        <option value="">Teclado</option>
-                        <option value="">Violão</option>
-                        <option value="">Guitarra</option>
-                        <option value="">Contrabaixo</option>
+                    <select name="" id="selectInstrumento">
                     </select>
                 </div>
             </div>
-            <button onclick="window.location.href='alunosPage.html'">ADICIONAR ALUNO</button>
+            <button onclick="cadastrarAluno()">ADICIONAR ALUNO</button>
         </div>
     </div>
 </body>
 
 </html>
+<script>
+    function buscarInstrumentos() {
+        let selectInstrumentos = document.getElementById("selectInstrumento")
+        fetch(`/instrumentos/buscarInstrumentos`).then(response => {
+            if (response.ok) {
+                response.json().then(resultado => {
+                    for (i = 0; i < resultado.length; i++) {
+                        let opt = document.createElement('option')
+                        opt.innerHTML = resultado[i].nome
+                        opt.value = resultado[i].idInstrumento
+                        selectInstrumentos.appendChild(opt)
+                    }
+                })
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+        })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados: ${error.message}`);
+            });
+    }
+
+    function cadastrarAluno() {
+        let nomeVar = nameInput.value
+        let sexoVar = selectSexo.value
+        let emailVar = emailInput.value
+        let telefoneVar = telefoneInput.value
+        let instrumentoVar = selectIntrumento.value
+
+
+        fetch("/alunos/cadastrar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                nomeServer: nomeVar,
+                emailServer: emailVar,
+                senhaServer: senhaVar,
+            }),
+        }).then()
+    }
+</script>

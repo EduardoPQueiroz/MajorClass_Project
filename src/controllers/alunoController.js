@@ -1,0 +1,112 @@
+var alunoModel = require("../models/alunoModel")
+
+function getQtdNovosAlunosByMonth(req, res) {
+
+    var idProfessor = req.params.idProfessor;
+
+    alunoModel.getQtdNovosAlunosByIdProfessor(idProfessor).then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar a quantidade de novos alunos por mês do professor.", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
+function getQtdNovosAlunosUltimoMes(req, res) {
+
+    var idProfessor = req.params.idProfessor;
+
+    alunoModel.getQtdNovosAlunosUltimoMes(idProfessor).then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar a quantidade de novos alunos por mês do professor.", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
+function getTotalAlunosByIdProfessor(req, res) {
+    var idProfessor = req.params.idProfessor;
+
+    alunoModel.getTotalAlunosByIdProfessor(idProfessor).then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar o total de alunos do professor.", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
+function getInstrumentoMaisAulas(req, res) {
+    var idProfessor = req.params.idProfessor;
+
+    alunoModel.getInstrumentoMaisAulas(idProfessor).then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar o total de alunos do professor.", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
+function cadastrarAlunos(req, res){
+    let nome = req.nome
+    let email = req.email
+    let telefone = req.telefone
+    let sexo = req.sexo
+    let fkProfessor = req.fkProfessor
+    let fkInstrumento = req.fkInstrumento
+
+    if (nome == undefined) {
+        res.status(400).send("O nome está indefinido!");
+    } else if (email == undefined) {
+        res.status(400).send("O email está indefinido!");
+    } else if (telefone == undefined) {
+        res.status(403).send("O telefone está indefinido!");
+    } else if (sexo == undefined) {
+        res.status(403).send("O sexo está indefinido!");
+    } else if (fkProfessor == undefined) {
+        res.status(403).send("O fkProfessor está indefinido!");
+    } else if (fkInstrumento == undefined) {
+        res.status(403).send("O fkInstrumento está indefinido!");
+    }{
+        alunoModel.cadastrarAlunos(nome, email, telefone, sexo, fkProfessor, fkInstrumento)
+            .then(
+                function (resultado) {
+                    res.json(resultado);
+                }
+            )
+            .catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log("Houve um erro ao realizar o post: ", erro.sqlMessage);
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+    }
+}
+
+module.exports = {
+    getQtdNovosAlunosByMonth,
+    getQtdNovosAlunosUltimoMes,
+    getTotalAlunosByIdProfessor,
+    getInstrumentoMaisAulas,
+    cadastrarAlunos
+}
