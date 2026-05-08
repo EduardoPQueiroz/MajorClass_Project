@@ -12,7 +12,7 @@ function buscarAlunosPorProfessor(idProfessor) {
 
 function cadastrarAlunos(nome, email, telefone, sexo, fkProfessor, fkInstrumento) {
 
-    var instrucaoSql = `INSERT INTO aluno (nome, email, telefone, sexo, fkProfessor, fkInstrumento) VALUES (${nome}, ${email}, ${telefone}, ${sexo}, ${fkProfessor}, ${fkInstrumento})`;
+    var instrucaoSql = `INSERT INTO aluno (nome, email, telefone, sexo, fkProfessor, fkInstrumento) VALUES ('${nome}', '${email}', '${telefone}', '${sexo}', ${fkProfessor}, ${fkInstrumento})`;
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);

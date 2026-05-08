@@ -106,10 +106,11 @@
         let sexoVar = selectSexo.value
         let emailVar = emailInput.value
         let telefoneVar = telefoneInput.value
-        let instrumentoVar = selectIntrumento.value
+        let instrumentoVar = selectInstrumento.value
+        let fkProfessorVar = sessionStorage.ID_USUARIO
 
 
-        fetch("/alunos/cadastrar", {
+        fetch("/alunos/cadastrarAluno", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -117,8 +118,20 @@
             body: JSON.stringify({
                 nomeServer: nomeVar,
                 emailServer: emailVar,
-                senhaServer: senhaVar,
+                sexoServer: sexoVar,
+                telefoneServer: telefoneVar,
+                instrumentoServer: instrumentoVar,
+                fkProfessorServer: fkProfessorVar
             }),
-        }).then()
+        }).then(resposta =>{
+            console.log("resposta: ", resposta);
+            if(resposta.ok){
+                alert("Aluno cadastrado com sucesso");
+            }else{
+                throw "Houve um erro ao realizar o cadastro do aluno"
+            }
+        }).catch(error => {
+            console.log('ERRO: ', error)
+        });
     }
 </script>

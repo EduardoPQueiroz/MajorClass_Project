@@ -67,12 +67,12 @@ function getInstrumentoMaisAulas(req, res) {
 }
 
 function cadastrarAlunos(req, res){
-    let nome = req.nome
-    let email = req.email
-    let telefone = req.telefone
-    let sexo = req.sexo
-    let fkProfessor = req.fkProfessor
-    let fkInstrumento = req.fkInstrumento
+    let nome = req.body.nomeServer
+    let email = req.body.emailServer
+    let telefone = req.body.telefoneServer
+    let sexo = req.body.sexoServer
+    let fkProfessor = req.body.fkProfessorServer
+    let fkInstrumento = req.body.instrumentoServer
 
     if (nome == undefined) {
         res.status(400).send("O nome está indefinido!");

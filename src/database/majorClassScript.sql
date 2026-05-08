@@ -93,6 +93,7 @@ insert into aluno (nome, email, telefone, sexo, fkProfessor, fkInstrumento, data
 ('Samuel Barbosa', 'samuel.barbosa@gmail.com', '11987650034', 'M', 103, 4, '2025-06-19'),
 ('Larissa Monteiro', 'larissa.monteiro@gmail.com', '11987650035', 'F', 104, 5, '2025-06-21');
 
+
 insert into aluno (nome, email, telefone, sexo, fkProfessor, fkInstrumento, dataCadastro) values
 ('Lucas Almeida', 'lucas.almeida@gmail.com', '11987650001', 'M', 100, 1, '2025-01-15'),
 ('Fernanda Souza', 'fernanda.souza@gmail.com', '11987650002', 'F', 101, 2, '2025-01-20'),
