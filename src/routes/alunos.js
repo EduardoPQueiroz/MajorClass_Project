@@ -7,6 +7,10 @@ router.get("/getQtdAlunosByIdProfessor/:idProfessor", function (req, res) {
     alunoController.getQtdNovosAlunosByMonth(req, res)
 });
 
+router.get("/getAlunos/:idProfessor", function(req, res){
+    alunoController.getAlunosByProfessor(req, res);
+});
+
 router.get("/getQtdAlunosUltimoMes/:idProfessor", function (req, res) {
     alunoController.getQtdNovosAlunosUltimoMes(req, res)
 });

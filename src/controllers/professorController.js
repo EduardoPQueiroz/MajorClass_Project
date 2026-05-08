@@ -23,7 +23,7 @@ function autenticar(req, res) {
                         // res.json(resultadoAutenticar[0]);
                         alunoModel.buscarAlunosPorProfessor(resultadoAutenticar[0].idProfessor)
                             .then((resultadoAlunos) => {
-                                console.log(`\nAlunos encontrados: ${JSON.stringify(resultadoAlunos)}`)
+                                // console.log(`\nAlunos encontrados: ${JSON.stringify(resultadoAlunos)}`)
                                 res.json({
                                     idProfessor: resultadoAutenticar[0].idProfessor,
                                     email: resultadoAutenticar[0].email,

@@ -67,23 +67,29 @@
 </html>
 <script>
     function exibirAlunos() {
-        JSON.parse(sessionStorage.ALUNOS).forEach(item => {
-            document.getElementById("cardAlunos").innerHTML += `
-                    <div class="divAluno">
-                        <div class="topoAluno">
-                            <p onclick="window.location.href='historicoAlunoPage.html'">${item.nome}</p>
-                            <div class="imgsContainer">
-                                <img onclick="window.location.href='removeAlunoPage.html'"
-                                    src="../../img/Edit/Remove_Minus_Circle.svg" alt="">
-                                <img onclick="window.location.href='editAlunosPage.html'" src="../../img/Edit/Edit_Pencil_01.svg" alt="">
-                            </div>
-                        </div>
-                        <div class="alunoBottom">
-                            <p>Instrumento: <span>${item.instrumento}</span></p>
-                            <p>Telefone: <span>${item.telefone}</span></p>
-                        </div>
-                    </div>
-                    `
-        });
+        fetch(`/alunos/getAlunos/${sessionStorage.ID_USUARIO}`).then(response =>{
+            if(response.ok){
+                response.json().then(resposta =>{
+                    for(i=0; i<resposta.length; i++){
+                            document.getElementById("cardAlunos").innerHTML += `
+                                <div class="divAluno">
+                                    <div class="topoAluno">
+                                        <p onclick="window.location.href='historicoAlunoPage.html'">${resposta[i].nome}</p>
+                                        <div class="imgsContainer">
+                                            <img onclick="window.location.href='removeAlunoPage.html'"
+                                                src="../../img/Edit/Remove_Minus_Circle.svg" alt="">
+                                            <img onclick="window.location.href='editAlunosPage.html'" src="../../img/Edit/Edit_Pencil_01.svg" alt="">
+                                        </div>
+                                    </div>
+                                    <div class="alunoBottom">
+                                        <p>Instrumento: <span>${resposta[i].instrumento}</span></p>
+                                        <p>Telefone: <span>${resposta[i].telefone}</span></p>
+                                    </div>
+                                </div>
+                                `
+                    }
+                })
+            }
+        })
     }
 </script>
