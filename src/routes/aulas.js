@@ -11,4 +11,8 @@ router.post("/cadastrarAula", function(req, res){
     aulaController.cadastrarAula(req, res)
 })
 
+router.delete("/removerAula/:idAula", function(req, res){
+    aulaController.removerAula(req, res)
+})
+
 module.exports = router;

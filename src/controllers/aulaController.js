@@ -32,7 +32,26 @@ function cadastrarAula(req, res){
     })
 }
 
+function removerAula(req, res){
+    let idAula = req.params.idAula
+
+    aulaModel.removerAula(idAula)
+        .then(
+            function (resultado) {
+                res.json(resultado);
+            }
+        )
+        .catch(
+            function (erro) {
+                console.log(erro);
+                console.log("Houve um erro ao deletar o aluno: ", erro.sqlMessage);
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
+}
+
 module.exports = {
     buscarAulasPorProfessor,
-    cadastrarAula
+    cadastrarAula,
+    removerAula
 }

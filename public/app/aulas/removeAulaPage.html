@@ -16,13 +16,13 @@
         <img src="../../img/LOGOIMAGE_INVERTIDO.png" alt="" onclick="window.location.href='../initialPage.html'">
         <div class="linksContainer">
             <div class="navBarLink">
-                <a href="alunosPage.html">
+                <a href="../alunos/alunosPage.html">
                     <img src="../../img/User/Users.png" alt="">
                     <p>ALUNOS</p>
                 </a>
             </div>
             <div class="navBarLink">
-                <a href="../aulas/aulasPage.html">
+                <a href="aulasPage.html">
                     <img src="../../img/Calendar/Calendar_Days.svg" alt="">
                     <p>AULAS</p>
                 </a>
@@ -49,10 +49,29 @@
             <p>VOCÊ TEM CERTEZA QUE DESEJA REMOVER ESSA AULA?</p>
             <div class="btnsContainer">
                 <button id="btnCancelar" onclick="window.location.href='aulasPage.html'">CANCELAR</button>
-                <button id="btnRemover" onclick="window.location.href='aulasPage.html'">REMOVER AULA</button>
+                <button id="btnRemover" onclick="removerAula()">REMOVER AULA</button>
             </div>
         </div>
     </div>
 </body>
-
 </html>
+<script>
+    function removerAula(){
+        let idAula = sessionStorage.ID_AULA_REMOVER
+        fetch(`/aulas/removerAula/${idAula}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }).then(response=>{
+            if(response.ok){
+                alert("Aula removida com sucesso")
+                window.location.href='aulasPage.html'
+            }else{
+                throw("Foi impossível remover a aula")
+            }
+        }).catch(error=>{
+            console.error("Houve um erro ao remover a aula", error)
+        })
+    }
+</script>

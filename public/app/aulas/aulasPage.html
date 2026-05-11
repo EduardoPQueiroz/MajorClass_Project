@@ -66,6 +66,12 @@
 
 </html>
 <script>
+    function removerAula(idAula){
+        sessionStorage.ID_AULA_REMOVER = idAula
+        console.log("Id da aula: ", idAula)
+        window.location.href='removeAulaPage.html'
+    }
+
     function exibirAulas() {
         console.log(sessionStorage.ID_USUARIO)
         fetch(`/aulas/getAulasByProfessor/${sessionStorage.ID_USUARIO}`).then(function (resposta) {
@@ -84,7 +90,7 @@
                                         <p>${resposta[i].nomeAluno} - ${resposta[i].nomeInstrumento}</p>
                                     </div>
                                     <div class="imgsContainer">
-                                        <img onclick="window.location.href='removeAulaPage.html'"
+                                        <img onclick="removerAula(${resposta[i].idAula})"
                                             src="../../img/Edit/Remove_Minus_Circle.svg" alt="">
                                         <img onclick="window.location.href='editAulas.html'" src="../../img/Edit/Edit_Pencil_01.svg"
                                             alt="">

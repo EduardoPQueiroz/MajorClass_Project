@@ -18,3 +18,20 @@ function buscarInstrumentos() {
                 console.error(`Erro na obtenção dos dados: ${error.message}`);
             });
     }
+
+    function buscarAlunos(){
+        let selectAlunos = document.getElementById('selectAluno')
+
+        fetch(`/alunos/getAlunos/${sessionStorage.ID_USUARIO}`).then(response =>{
+            if(response.ok){
+                response.json().then(resposta =>{
+                    for(i=0; i<resposta.length; i++){
+                        let opt = document.createElement('option')
+                        opt.innerHTML = resposta[i].nome
+                        opt.value = resposta[i].idAluno
+                        selectAlunos.appendChild(opt)
+                    }
+                })
+            }
+        })
+    }

@@ -23,7 +23,14 @@ function cadastrarAula(fkAluno, dataAula, horaAula){
     return database.executar(instrucaoSql)
 }
 
+function removerAula(idAula){
+    let instrucaoSql = `delete from aula where idAula = ${idAula}`
+    console.log('Executando a instrução SQL: \n' + instrucaoSql)
+    return database.executar(instrucaoSql)
+}
+
 module.exports = {
     buscarAulasPorProfessor,
-    cadastrarAula
+    cadastrarAula,
+    removerAula,
 }

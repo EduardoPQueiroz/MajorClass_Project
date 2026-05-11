@@ -10,6 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
 </head>
+<script src="../../js/script.js"></script>
 
 <body onload="buscarAlunos()">
     <div class="header">
@@ -67,24 +68,6 @@
 </body>
 </html>
 <script>
-    function buscarAlunos(){
-        let selectAlunos = document.getElementById('selectAluno')
-
-        fetch(`/alunos/getAlunos/${sessionStorage.ID_USUARIO}`).then(response =>{
-            if(response.ok){
-                response.json().then(resposta =>{
-                    for(i=0; i<resposta.length; i++){
-                        let opt = document.createElement('option')
-                        opt.innerHTML = resposta[i].nome
-                        opt.value = resposta[i].idAluno
-                        selectAlunos.appendChild(opt)
-                    }
-                })
-            }
-        })
-    }
-
-
     function cadastrarAula(){
         let fkAlunoVar = selectAluno.value
         let dataAulaVar = dateInp.value
