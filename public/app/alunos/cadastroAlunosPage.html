@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
 </head>
-
+<script src="../../js/script.js"></script>
 <body onload="buscarInstrumentos()">
     <div class="header">
         <img src="../../img/LOGOIMAGE_INVERTIDO.png" alt="" onclick="window.location.href='../initialPage.html'">
@@ -80,26 +80,6 @@
 
 </html>
 <script>
-    function buscarInstrumentos() {
-        let selectInstrumentos = document.getElementById("selectInstrumento")
-        fetch(`/instrumentos/buscarInstrumentos`).then(response => {
-            if (response.ok) {
-                response.json().then(resultado => {
-                    for (i = 0; i < resultado.length; i++) {
-                        let opt = document.createElement('option')
-                        opt.innerHTML = resultado[i].nome
-                        opt.value = resultado[i].idInstrumento
-                        selectInstrumentos.appendChild(opt)
-                    }
-                })
-            } else {
-                console.error('Nenhum dado encontrado ou erro na API');
-            }
-        })
-            .catch(function (error) {
-                console.error(`Erro na obtenção dos dados: ${error.message}`);
-            });
-    }
 
     function cadastrarAluno() {
         let nomeVar = nameInput.value

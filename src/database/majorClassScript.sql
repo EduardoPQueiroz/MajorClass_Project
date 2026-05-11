@@ -121,7 +121,9 @@ insert into aula (fkAluno, dataAula, horaAula, presenca, fkAulaAnterior) values
 (5, '2026-04-05', '18:00:00', 'AUSENTE', null);
 
 -- QUERYS -----------------------------------------------------------------------------------------------
+use majorclass;
 
+select * from aluno;
 
 -- TABELA ALUNOS ----------------------------------------------------------------------------
 

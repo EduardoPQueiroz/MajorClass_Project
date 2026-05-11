@@ -1,5 +1,7 @@
 var alunoModel = require("../models/alunoModel")
 
+
+//MÉTODOS GET
 function getQtdNovosAlunosByMonth(req, res) {
 
     var idProfessor = req.params.idProfessor;
@@ -82,6 +84,8 @@ function getInstrumentoMaisAulas(req, res) {
     });
 }
 
+//MÉTODOS POST
+
 function cadastrarAlunos(req, res){
     let nome = req.body.nomeServer
     let email = req.body.emailServer
@@ -119,11 +123,48 @@ function cadastrarAlunos(req, res){
     }
 }
 
+//MÉTODOS PUT
+function editarAluno(req, res){
+    let email = req.body.emailServer
+    let telefone = req.body.telefoneServer
+    let instrumento = req.body.instrumentoServer
+    let idAluno = req.params.idAluno
+
+    alunoModel.editarAluno(email, telefone, instrumento, idAluno).then(resultado=>{
+        res.json(resultado);
+    }).catch(erro=>{
+        console.log(erro)
+        console.log('Houve um erro ao editar o aluno: ', erro.sqlMessage)
+        res.status(500).json(erro.sqlMessage)
+    })
+}
+
+// MÉTODOS DELETE
+function removerAluno(req, res){
+    var idAluno = req.params.idAluno;
+
+    alunoModel.removerAluno(idAluno)
+        .then(
+            function (resultado) {
+                res.json(resultado);
+            }
+        )
+        .catch(
+            function (erro) {
+                console.log(erro);
+                console.log("Houve um erro ao deletar o aluno: ", erro.sqlMessage);
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
+}
+
 module.exports = {
     getQtdNovosAlunosByMonth,
     getAlunosByProfessor,
     getQtdNovosAlunosUltimoMes,
     getTotalAlunosByIdProfessor,
     getInstrumentoMaisAulas,
-    cadastrarAlunos
+    cadastrarAlunos,
+    removerAluno,
+    editarAluno
 }

@@ -27,4 +27,12 @@ router.post('/cadastrarAluno', function(req, res){
     alunoController.cadastrarAlunos(req, res)
 })
 
+router.put('/editarAluno/:idAluno', function(req, res){
+    alunoController.editarAluno(req, res)
+})
+
+router.delete('/removerAluno/:idAluno', function(req, res){
+    alunoController.removerAluno(req, res)    
+})
+
 module.exports = router;

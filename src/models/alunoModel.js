@@ -1,18 +1,12 @@
 var database = require("../database/config");
 
+
+//MÉTODOS GET
 function buscarAlunosPorProfessor(idProfessor) {
 
     var instrucaoSql = `select a.*, i.nome as instrumento from aluno a inner join
                         instrumento i on a.fkInstrumento = i.idInstrumento 
                         where a.fkProfessor = ${idProfessor};`;
-
-    console.log("Executando a instrução SQL: \n" + instrucaoSql);
-    return database.executar(instrucaoSql);
-}
-
-function cadastrarAlunos(nome, email, telefone, sexo, fkProfessor, fkInstrumento) {
-
-    var instrucaoSql = `INSERT INTO aluno (nome, email, telefone, sexo, fkProfessor, fkInstrumento) VALUES ('${nome}', '${email}', '${telefone}', '${sexo}', ${fkProfessor}, ${fkInstrumento})`;
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
@@ -37,6 +31,7 @@ function getQtdNovosAlunosUltimoMes(idProfessor) {
     order by mes;`
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
+
     return database.executar(instrucaoSql);
 }
 
@@ -50,13 +45,40 @@ function getInstrumentoMaisAulas(idProfessor){
     var instrucaoSql = `select count(fkInstrumento) as qtdAulasInstrumento, i.nome as nomeInstrumento
                         from aluno al inner join instrumento i
                         on al.fkInstrumento = i.idInstrumento
-                        where al.fkProfessor = 101
+                        where al.fkProfessor = ${idProfessor}
                         group by nomeInstrumento
                         order by qtdAulasInstrumento desc
                         limit 1;`
     console.log("Executando a instrução SQL: \n" + instrucaoSql)
     return database.executar(instrucaoSql)
 }
+
+//MÉTODOS POST
+
+function cadastrarAlunos(nome, email, telefone, sexo, fkProfessor, fkInstrumento) {
+    var instrucaoSql = `INSERT INTO aluno (nome, email, telefone, sexo, fkProfessor, fkInstrumento) VALUES ('${nome}', '${email}', '${telefone}', '${sexo}', ${fkProfessor}, ${fkInstrumento})`;
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+//MÉTODOS PUT
+function editarAluno(email, telefone, fkInstrumento, idAluno){
+    var instrucaoSql = `update aluno set email = '${email}', 
+                        telefone = '${telefone}', 
+                        fkInstrumento = ${fkInstrumento} 
+                        where idAluno = ${idAluno}`
+    console.log('Executando a instrução SQL: \n' + instrucaoSql);
+    return database.executar(instrucaoSql)
+}
+
+// MÉTODOS DELETE
+function removerAluno(idAluno){
+    var instrucaoSql = `delete from aluno where idAluno = ${idAluno}`
+    console.log("Executando a instrução SQL: \n" + instrucaoSql)
+    return database.executar(instrucaoSql) 
+}
+
 
 
 module.exports = {
@@ -65,5 +87,7 @@ module.exports = {
     getQtdNovosAlunosUltimoMes,
     getTotalAlunosByIdProfessor,
     getInstrumentoMaisAulas,
-    cadastrarAlunos
+    cadastrarAlunos,
+    removerAluno,
+    editarAluno
 }

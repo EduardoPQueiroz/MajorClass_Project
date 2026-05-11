@@ -66,6 +66,18 @@
 
 </html>
 <script>
+    function removerAluno(idAluno){
+        sessionStorage.ID_ALUNO_REMOVER = idAluno
+        console.log("Id do aluno: ", idAluno)
+        window.location.href='removeAlunoPage.html'
+    }
+
+    function editarAluno(idAluno){
+        sessionStorage.ID_ALUNO_EDITAR   = idAluno
+        console.log("Id do aluno: ", idAluno)
+        window.location.href='editAlunosPage.html'
+    }
+
     function exibirAlunos() {
         fetch(`/alunos/getAlunos/${sessionStorage.ID_USUARIO}`).then(response =>{
             if(response.ok){
@@ -76,9 +88,9 @@
                                     <div class="topoAluno">
                                         <p onclick="window.location.href='historicoAlunoPage.html'">${resposta[i].nome}</p>
                                         <div class="imgsContainer">
-                                            <img onclick="window.location.href='removeAlunoPage.html'"
+                                            <img onclick="removerAluno(${resposta[i].idAluno})"
                                                 src="../../img/Edit/Remove_Minus_Circle.svg" alt="">
-                                            <img onclick="window.location.href='editAlunosPage.html'" src="../../img/Edit/Edit_Pencil_01.svg" alt="">
+                                            <img onclick="editarAluno(${resposta[i].idAluno})" src="../../img/Edit/Edit_Pencil_01.svg" alt="">
                                         </div>
                                     </div>
                                     <div class="alunoBottom">
