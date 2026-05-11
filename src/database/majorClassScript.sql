@@ -37,10 +37,13 @@ create table aula(
     dataAula date,
     horaAula time,
     presenca varchar(30) check (presenca in('PRESENTE', 'AUSENTE', 'FALTA JUSTIFICADA')),
+    realizada tinyint default(0),
     fkAluno int,
     fkAulaAnterior int,
     primary key(idAula)
 )auto_increment=1000;
+
+
 
 alter table aula add constraint foreign key (fkAluno) references aluno(idAluno);
 alter table aula add constraint foreign key (fkAulaAnterior) references aula(idAula);
@@ -127,6 +130,9 @@ select * from aluno;
 
 -- TABELA ALUNOS ----------------------------------------------------------------------------
 
+use majorclass;
+delete from aluno where idAluno = 15;
+
 -- getTotalAlunosByProfessor
 select count(*) as totalAlunos from aluno where fkProfessor = 100;
 
@@ -148,10 +154,13 @@ select month(dataCadastro) as numeroMes, monthname(dataCadastro) as nomeMes, cou
 select count(fkInstrumento) as qtdAulasInstrumento, i.nome as nomeInstrumento
 from aluno al inner join instrumento i
 on al.fkInstrumento = i.idInstrumento
-where al.fkProfessor = 101
+where al.fkProfessor = 103
 group by nomeInstrumento
 order by qtdAulasInstrumento desc
 limit 1;
+
+select * from professor;
+
 
 -- getAlunosByIdProfessor
 select a.*, i.nome as Instrumento, au.* from aluno a inner join
@@ -206,6 +215,11 @@ group by al.nome;
 
 SET lc_time_names = 'pt_BR';
 select DATE_FORMAT(dataAula, '%W') as diaSemana from aula;
+
+update aluno set email = 'email@gmail.com', 
+						telefone = '11987654321', 
+                        fkInstrumento = 3 
+                        where idAluno = 6;
 
 
 

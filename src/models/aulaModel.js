@@ -15,6 +15,15 @@ function buscarAulasPorProfessor(idProfessor) {
     return database.executar(instrucaoSql);
 }
 
+function cadastrarAula(fkAluno, dataAula, horaAula){
+    let instrucaoSql = `insert into aula(fkAluno, dataAula, horaAula) values
+                        (${fkAluno}, '${dataAula}', '${horaAula}:00')`
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql)
+    return database.executar(instrucaoSql)
+}
+
 module.exports = {
-    buscarAulasPorProfessor
+    buscarAulasPorProfessor,
+    cadastrarAula
 }

@@ -17,6 +17,22 @@ function buscarAulasPorProfessor(req, res){
     });
 }
 
+function cadastrarAula(req, res){
+    let fkAluno = req.body.fkAlunoServer
+    let dataAula = req.body.dataAulaServer
+    let horaAula = req.body.horaAulaServer
+
+    aulaModel.cadastrarAula(fkAluno, dataAula, horaAula)
+    .then(resultado=>{
+        res.json(resultado)
+    }).catch(error=>{
+        console.log(error);
+        console.log("Houve um erro ao realizar o post: ", error.sqlMessage);
+        res.status(500).json(error.sqlMessage);
+    })
+}
+
 module.exports = {
-    buscarAulasPorProfessor
+    buscarAulasPorProfessor,
+    cadastrarAula
 }

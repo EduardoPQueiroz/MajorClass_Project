@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
 </head>
 
-<body>
+<body onload="buscarAlunos()">
     <div class="header">
         <img src="../../img/LOGOIMAGE_INVERTIDO.png" alt="" onclick="window.location.href='../initialPage.html'">
         <div class="linksContainer">
@@ -49,25 +49,65 @@
             <div class="inputContainer">
                 <div class="inputField">
                     <p>Aluno: </p>
-                    <select name="" id="">
-                        <option value="">Matheus Vizzas</option>
-                        <option value="">Rafael Santanas</option>
-                        <option value="">Ancelmo Sousa</option>
-                        <option value="">Joseílton Santos</option>
+                    <select name="" id="selectAluno">
                     </select>   
                 </div>
                 <div class="inputField">
                     <p>Data: </p>
-                    <input type="date" placeholder="email@exemplo.com">
+                    <input type="date" placeholder="dd/mm/yyyy" id="dateInp">
                 </div>
                 <div class="inputField">
                     <p>Hora: </p>
-                    <input type="time" placeholder="11987654321">
+                    <input type="time" placeholder="00:00" id="horaInp">
                 </div>
             </div>
-            <button onclick="window.location.href='aulasPage.html'">ADICIONAR ALUNO</button>
+            <button onclick="cadastrarAula()">ADICIONAR ALUNO</button>
         </div>
     </div>
 </body>
-
 </html>
+<script>
+    function buscarAlunos(){
+        let selectAlunos = document.getElementById('selectAluno')
+
+        fetch(`/alunos/getAlunos/${sessionStorage.ID_USUARIO}`).then(response =>{
+            if(response.ok){
+                response.json().then(resposta =>{
+                    for(i=0; i<resposta.length; i++){
+                        let opt = document.createElement('option')
+                        opt.innerHTML = resposta[i].nome
+                        opt.value = resposta[i].idAluno
+                        selectAlunos.appendChild(opt)
+                    }
+                })
+            }
+        })
+    }
+
+
+    function cadastrarAula(){
+        let fkAlunoVar = selectAluno.value
+        let dataAulaVar = dateInp.value
+        let horaAulaVar = horaInp.value
+        fetch(`/aulas/cadastrarAula`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                fkAlunoServer: fkAlunoVar,
+                dataAulaServer: dataAulaVar,
+                horaAulaServer: horaAulaVar,
+            }),
+        }).then(response=>{
+            if(response.ok){
+                alert("Aula cadastrada com sucesso!")
+                window.location.href='aulasPage.html'
+            }else{
+                throw("Houve um erro ao cadastrar a aula")
+            }
+        }).catch(error=>{
+            console.error("Houve um erro ao cadastrar", error)
+        })
+    }
+</script>
