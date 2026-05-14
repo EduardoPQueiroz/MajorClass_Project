@@ -11,6 +11,10 @@ router.get("/buscarAulaById/:idAula", function(req, res){
     aulaController.buscarAulaById(req, res);
 })
 
+router.get("/buscarHistoricoAluno/:fkAluno", function(req, res){
+    aulaController.buscarHistoricoAulas(req, res);
+})
+
 router.post("/cadastrarAula", function(req, res){
     aulaController.cadastrarAula(req, res)
 })

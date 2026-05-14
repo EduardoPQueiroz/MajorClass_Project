@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
 </head>
 
-<body>
+<body onload="exibirHistorico()">
     <div class="header">
         <img src="../../img/LOGOIMAGE_INVERTIDO.png" alt="" onclick="window.location.href='../initialPage.html'">
         <div class="linksContainer">
@@ -47,35 +47,36 @@
                 Histórico de aulas:
             </p>
         </div>
-        <div class="containerAulas">
-            <div class="divAluno">
-                <div class="topoAluno">
-                    <p>Matheus Vizzas - <span>30/07</span></p>
-                </div>
-                <div class="alunoBottom">
-                    <p>Instrumento: <span>Teclado</span></p>
-                    <p>PRESENTE</p>
-                </div>
-            </div>
-            <div class="divAluno">
-                <div class="topoAluno">
-                    <p>Matheus Vizzas - <span>26/07</span></p>
-                </div>
-                <div class="alunoBottom">
-                    <p>Instrumento: <span>Teclado</span></p>
-                    <p>PRESENTE</p>
-                </div>
-            </div>
-            <div class="divAluno">
-                <div class="topoAluno">
-                    <p>Matheus Vizzas - <span>21/07</span></p>
-                </div>
-                <div class="alunoBottom">
-                    <p>Instrumento: <span>Teclado</span></p>
-                    <p>PRESENTE</p>
-                </div>
-            </div>
+        <div class="containerAulas" id="cardsAulas">
+        
         </div>
 </body>
 
 </html>
+<script>
+    function exibirHistorico() {
+        console.log("chamou")
+        fetch(`/aulas/buscarHistoricoAluno/${sessionStorage.ID_ALUNO_HISTORICO}`).then(response => {
+            if (response.ok) {
+                response.json().then(resposta => {
+                    for (i = 0; i < resposta.length; i++) {
+                        let data = new Date(resposta[i].dataAula)
+                        console.log(data)
+                        let dataFormatada = data.toLocaleDateString('pt-br')
+                        document.getElementById("cardsAulas").innerHTML += `
+                                <div class="divAluno">
+                                    <div class="topoAluno">
+                                        <p>${resposta[i].nome} - <span>${dataFormatada}</span></p>
+                                    </div>
+                                    <div class="alunoBottom">
+                                        <p>Instrumento: <span>${resposta[i].nomeInstrumento}</span></p>
+                                        <p>${resposta[i].presenca}</p>
+                                    </div>
+                                </div>
+                                `
+                    }
+                })
+            }
+        })
+    }
+</script>

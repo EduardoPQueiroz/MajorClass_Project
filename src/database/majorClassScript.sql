@@ -134,6 +134,17 @@ select * from aluno;
 use majorclass;
 delete from aluno where idAluno = 15;
 
+use majorclass;
+
+select au.dataAula, au.presenca, au.fkAluno, al.nome, i.nome from aula au join aluno al 
+on al.idAluno = au.fkAluno join
+instrumento i on al.fkInstrumento = i.idInstrumento
+where fkAluno = 44;
+
+select * from aula;
+
+select au.*, al.* from aula au join aluno al on au.fkAluno = al.idAluno where idAula = 1005;
+
 -- getTotalAlunosByProfessor
 select count(*) as totalAlunos from aluno where fkProfessor = 100;
 

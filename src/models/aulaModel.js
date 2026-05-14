@@ -15,6 +15,15 @@ function buscarAulasPorProfessor(idProfessor) {
     return database.executar(instrucaoSql);
 }
 
+function buscarHistoricoAulas(fkAluno){
+    var instrucaoSql = `select au.dataAula, au.presenca, au.fkAluno, al.nome, i.nome as nomeInstrumento from aula au join aluno al 
+                        on al.idAluno = au.fkAluno join
+                        instrumento i on al.fkInstrumento = i.idInstrumento
+                        where fkAluno = ${fkAluno} and au.realizada = 1;`
+    console.log("Executando a instrução SQL: \n" + instrucaoSql)
+    return database.executar(instrucaoSql)
+}
+
 function buscarAulaById(idAula){
     let instrucaoSql = `select au.*, al.* from aula au join aluno al on au.fkAluno = al.idAluno where idAula = ${idAula}`
     
@@ -49,6 +58,7 @@ function editarAula(presenca, realizada, idAula){
 module.exports = {
     buscarAulasPorProfessor,
     buscarAulaById,
+    buscarHistoricoAulas,
     cadastrarAula,
     removerAula,
     editarAula

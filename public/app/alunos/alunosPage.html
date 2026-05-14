@@ -66,6 +66,12 @@
 
 </html>
 <script>
+    function alunoHistorico(idAluno){
+        sessionStorage.ID_ALUNO_HISTORICO = idAluno
+        console.log("Id do aluno: ", idAluno)
+        window.location.href='historicoAlunoPage.html'
+    }
+
     function removerAluno(idAluno){
         sessionStorage.ID_ALUNO_REMOVER = idAluno
         console.log("Id do aluno: ", idAluno)
@@ -86,7 +92,7 @@
                             document.getElementById("cardAlunos").innerHTML += `
                                 <div class="divAluno">
                                     <div class="topoAluno">
-                                        <p onclick="window.location.href='historicoAlunoPage.html'">${resposta[i].nome}</p>
+                                        <p onclick="alunoHistorico(${resposta[i].idAluno})">${resposta[i].nome}</p>
                                         <div class="imgsContainer">
                                             <img onclick="removerAluno(${resposta[i].idAluno})"
                                                 src="../../img/Edit/Remove_Minus_Circle.svg" alt="">
