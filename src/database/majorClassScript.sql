@@ -45,6 +45,7 @@ create table aula(
 
 
 
+
 alter table aula add constraint foreign key (fkAluno) references aluno(idAluno);
 alter table aula add constraint foreign key (fkAulaAnterior) references aula(idAula);
 

@@ -12,7 +12,7 @@
 </head>
 <script src="../../js/script.js"></script>
 
-<body onload="buscarAlunos()">
+<body onload="buscarAlunos(), exibirAula()">
     <div class="header">
         <img src="../../img/LOGOIMAGE_INVERTIDO.png" alt="" onclick="window.location.href='../initialPage.html'">
         <div class="linksContainer">
@@ -42,45 +42,95 @@
             </div>
         </div>
     </div>
-    <div class="mainRegister">
+    <div class="mainContent">
         <h1>
             EDITAR AULA
         </h1>
         <div class="registerForm">
             <div class="inputContainer">
                 <div class="inputField">
-                    <p>Aluno: </p>
-                    <select name="" id="selectAluno">
-                        <option value=""></option>
-                    </select>   
-                </div>
-                <div class="inputField">
-                    <p>Data: </p>
-                    <input type="date" placeholder="dd/mm/yyyy">
-                </div>
-                <div class="inputField">
-                    <p>Hora: </p>
-                    <input type="time" placeholder="00:00">
-                </div>
-                <div class="inputField">
-                    <p>Presença: </p>
-                    <select name="" id="selectPresenca">
-                        <option value="'PRESENTE'">PRESENTE</option>
-                        <option value="'AUSENTE'">AUSENTE</option>
-                        <option value="'FALTA JUSTIFICADA'">FALTA JUSTIFICADA</option>
-                    </select>
+                    <span id="alunoInfo"></span>
                 </div>
                 <div class="inputField">
                     <p>Aula realizada: </p>
                     <div class="radioSelect">
-                        <div class="radioOpt"><input type="radio" name="aulaRealizada" value="1" id="radioSim"><span>SIM</span></div>
-                        <div class="radioOpt"><input type="radio" name="aulaRealizada" value="0" id="radioNao"><span>NÃO</span></div>
+                        <div class="radioOpt"><input type="radio" name="aulaRealizada" value=1 id="radioSim"
+                                onclick="exibirPresenca()""><span>SIM</span></div>
+                        <div class=" radioOpt"><input type="radio" name="aulaRealizada" value=0 id="radioNao"
+                                onclick="exibirPresenca()"><span>NÃO</span></div>
                     </div>
                 </div>
+                <div class="inputField" id="inputPresenca" style="display: none;">
+                    <p>Presença: </p>
+                    <select name="" id="selectPresenca">
+                        <option value="PRESENTE">PRESENTE</option>
+                        <option value="AUSENTE">AUSENTE</option>
+                        <option value="FALTA JUSTIFICADA">FALTA JUSTIFICADA</option>
+                    </select>
+                </div>
             </div>
-            <button onclick="window.location.href='aulasPage.html'">EDITAR ALUNO</button>
+            <button onclick="editarAula()">EDITAR AULA</button>
         </div>
     </div>
 </body>
 
 </html>
+<script>
+    function exibirAula(){
+        fetch(`/aulas/buscarAulaById/${sessionStorage.ID_AULA_EDITAR}`).then(response=>{
+            if(response.ok){
+                response.json().then(resposta=>{
+                    let data = new Date(resposta[0].dataAula)
+                    let dataFormatada = data.toLocaleDateString('pt-br')
+                    document.getElementById("alunoInfo").innerHTML += 
+                    `<span>${resposta[0].nome}</span> - <span>${dataFormatada}</span> - <span>${resposta[0].horaAula}</span>`
+                })
+            }else{
+                throw ('Erro ao buscar aulas')
+            }
+        }).catch(error=>{
+            console.error("Deu erro para buscar a aula")
+        })
+    }
+
+    function exibirPresenca() {
+        let selector = document.querySelector('input[name="aulaRealizada"]:checked').value;
+        iptPresenca = document.getElementById("inputPresenca")
+        if (selector == 1) {
+            iptPresenca.style.display = 'block'
+        } else {
+            iptPresenca.style.display = 'none'
+        }
+    }
+
+    function editarAula() {
+        let presencaVar = selectPresenca.value
+        let realizadaVar = document.querySelector('input[name="aulaRealizada"]:checked').value;
+
+        if (realizadaVar == 1) {
+            fetch(`/aulas/editarAula/${sessionStorage.ID_AULA_EDITAR}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    presencaServer: presencaVar,
+                    realizadaServer: realizadaVar,
+                })
+            }).then(response=>{
+                if(response.ok){
+                    alert('Aula editada com sucesso')
+                    window.location.href='aulasPage.html'
+                }else{
+                    throw ("Houve um erro ao editar a aula")
+                }
+            }).catch(error=>{
+                console.error('Houve um erro ao realizar a edição: ', error)
+            })
+        } else {
+            window.location.href='aulasPage.html'
+        }
+
+
+    }
+</script>

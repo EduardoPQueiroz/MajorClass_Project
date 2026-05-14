@@ -17,6 +17,22 @@ function buscarAulasPorProfessor(req, res){
     });
 }
 
+function buscarAulaById(req, res){
+    let idAula = req.params.idAula
+
+    aulaModel.buscarAulaById(idAula).then(function(resultado){
+        if(resultado.length > 0){
+            res.status(200).json(resultado);
+        }else{
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function(erro){
+        console.log(erro);
+        console.log("Houve um erro ao buscar as aulas pelo ID.", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    })
+}
+
 function cadastrarAula(req, res){
     let fkAluno = req.body.fkAlunoServer
     let dataAula = req.body.dataAulaServer
@@ -50,8 +66,24 @@ function removerAula(req, res){
         );
 }
 
+function editarAula(req, res){
+    let presenca = req.body.presencaServer
+    let realizada = req.body.realizadaServer
+    let idAula = req.params.idAula
+
+    aulaModel.editarAula(presenca, realizada, idAula).then(response =>{
+        res.json(response)
+    }).catch(error=>{
+        console.log(error);
+        console.log("Houve um erro ao editar o aluno: ", error.sqlMessage);
+        res.status(500).json(error.sqlMessage);
+    })
+}
+
 module.exports = {
     buscarAulasPorProfessor,
+    buscarAulaById,
     cadastrarAula,
-    removerAula
+    removerAula,
+    editarAula
 }

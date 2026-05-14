@@ -66,6 +66,13 @@
 
 </html>
 <script>
+
+    function editarAula(idAula){
+        sessionStorage.ID_AULA_EDITAR = idAula
+        console.log("Id da aula: ", idAula)
+        window.location.href='editAulas.html'
+    }
+
     function removerAula(idAula){
         sessionStorage.ID_AULA_REMOVER = idAula
         console.log("Id da aula: ", idAula)
@@ -92,7 +99,7 @@
                                     <div class="imgsContainer">
                                         <img onclick="removerAula(${resposta[i].idAula})"
                                             src="../../img/Edit/Remove_Minus_Circle.svg" alt="">
-                                        <img onclick="window.location.href='editAulas.html'" src="../../img/Edit/Edit_Pencil_01.svg"
+                                        <img onclick="editarAula(${resposta[i].idAula})" src="../../img/Edit/Edit_Pencil_01.svg"
                                             alt="">
                                     </div>
                                 </div>

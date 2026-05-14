@@ -7,12 +7,19 @@ function buscarAulasPorProfessor(idProfessor) {
                         on au.fkAluno = al.idAluno
                         inner join instrumento i
                         on al.fkInstrumento = i.idInstrumento
-                        where al.fkProfessor = ${idProfessor}
+                        where al.fkProfessor = ${idProfessor} and au.realizada = 0
                         order by au.dataAula
                         ;`;
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
+}
+
+function buscarAulaById(idAula){
+    let instrucaoSql = `select au.*, al.* from aula au join aluno al on au.fkAluno = al.idAluno where idAula = ${idAula}`
+    
+    console.log("Executando a instrução SQL: \n" + instrucaoSql)
+    return database.executar(instrucaoSql)
 }
 
 function cadastrarAula(fkAluno, dataAula, horaAula){
@@ -29,8 +36,20 @@ function removerAula(idAula){
     return database.executar(instrucaoSql)
 }
 
+function editarAula(presenca, realizada, idAula){
+    let instrucaoSql = `update aula
+                        set presenca = '${presenca}',
+                        realizada = ${realizada}
+                        where idAula = ${idAula}`
+
+    console.log('Executando a instrução SQL: \n' + instrucaoSql)
+    return database.executar(instrucaoSql)
+}
+
 module.exports = {
     buscarAulasPorProfessor,
+    buscarAulaById,
     cadastrarAula,
     removerAula,
+    editarAula
 }
