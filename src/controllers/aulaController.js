@@ -93,6 +93,51 @@ function buscarInstrumentoMaisAulas(req, res){
     })
 }
 
+function buscarQtdFaltasMes(req, res){
+    let idProfessor = req.params.idProfessor
+    aulaModel.buscarQtdFaltasMes(idProfessor).then(resultado =>{
+        if(resultado.length > 0){
+            res.status(200).json(resultado)
+        }else{
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(error=>{
+        console.log(error);
+        console.log("Houve um erro ao buscar as aulas pelo ID.", error.sqlMessage);
+        res.status(500).json(error.sqlMessage);
+    })
+}
+
+function buscarQtdFaltasUltimoMes(req, res){
+    let idProfessor = req.params.idProfessor
+    aulaModel.buscarQtdFaltasUltimoMes(idProfessor).then(resultado =>{
+        if(resultado.length > 0){
+            res.status(200).json(resultado)
+        }else{
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(error=>{
+        console.log(error);
+        console.log("Houve um erro ao buscar as aulas pelo ID.", error.sqlMessage);
+        res.status(500).json(error.sqlMessage);
+    })
+}
+
+function buscarAlunoMaisFaltas(req, res){
+    let idProfessor = req.params.idProfessor
+    aulaModel.buscarAlunoMaisFaltas(idProfessor).then(resultado =>{
+        if(resultado.length > 0){
+            res.status(200).json(resultado)
+        }else{
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(error=>{
+        console.log(error);
+        console.log("Houve um erro ao buscar as aulas pelo ID.", error.sqlMessage);
+        res.status(500).json(error.sqlMessage);
+    })
+}
+
 function cadastrarAula(req, res) {
     let fkAluno = req.body.fkAlunoServer
     let dataAula = req.body.dataAulaServer
@@ -147,6 +192,9 @@ module.exports = {
     buscarQtdAulasMes,
     buscarQtdAulasUltimoMes,
     buscarInstrumentoMaisAulas,
+    buscarQtdFaltasMes,
+    buscarQtdFaltasUltimoMes,
+    buscarAlunoMaisFaltas,
     cadastrarAula,
     removerAula,
     editarAula

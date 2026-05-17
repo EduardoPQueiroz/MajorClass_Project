@@ -205,11 +205,24 @@ on al.fkInstrumento = i.idInstrumento
 where al.fkProfessor = 100;
 
 -- getqtdAulaMes
-select count(*) as qtdAulas, month(dataAula) as mes from aula au join
+select count(*) as qtdAulas, monthname(dataAula) as mes from aula au join
 aluno al on au.fkAluno = al.idAluno join professor p
 on al.fkProfessor = p.idProfessor
 where p.idProfessor = 100
-group by mes;
+group by mes
+having mes = monthname(now());
+
+-- getInstrumentoMaisAulasMes
+select count(*) as qtdAulas, monthname(dataAula) as mes, i.nome as nomeInstrumento from aula au join
+aluno al on au.fkAluno = al.idAluno join professor p
+on al.fkProfessor = p.idProfessor join instrumento i
+on al.fkInstrumento = i.idInstrumento
+where p.idProfessor = 103
+group by mes, nomeInstrumento
+having mes = monthname(now())
+order by qtdAulas desc
+limit 1;
+
 
 
 -- getAulasByIdProfessor
@@ -220,7 +233,14 @@ instrumento i on al.fkInstrumento = i.idInstrumento
 where p.idProfessor = 102;
 
 -- getQTDfaltasMes
-select month(dataAula) mes, count(presenca) as numeroFaltas from aula where presenca = 'AUSENTE' group by mes;
+select monthname(aula.dataAula) mes, count(aula.presenca) as numeroFaltas, aluno.nome as nomeAluno from aula join aluno on
+aula.fkAluno = aluno.idAluno join professor on
+aluno.fkProfessor = professor.idProfessor
+where presenca = 'AUSENTE' and professor.idProfessor = 103
+group by mes, nomeAluno
+having mes = monthname(now())
+order by numeroFaltas desc
+limit 1;
 
 -- getQtdFaltasAlunoMes
 select al.nome, month(au.dataAula) mes, count(presenca) as numeroFaltas from aula au 

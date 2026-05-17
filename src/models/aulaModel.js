@@ -69,6 +69,43 @@ function buscarInstrumentoMaisAulas(idProfessor){
     return database.executar(instrucaoSql)
 }
 
+function buscarQtdFaltasMes(idProfessor){
+    let instrucaoSql = `select monthname(dataAula) mes, count(presenca) as numeroFaltas from aula join aluno on
+                        aula.fkAluno = aluno.idAluno join professor on
+                        aluno.fkProfessor = professor.idProfessor
+                        where presenca = 'AUSENTE' and professor.idProfessor = ${idProfessor}
+                        group by mes;`
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql)
+    return database.executar(instrucaoSql)
+}
+
+function buscarQtdFaltasUltimoMes(idProfessor){
+    let instrucaoSql = `select monthname(dataAula) mes, count(presenca) as numeroFaltas from aula join aluno on
+                        aula.fkAluno = aluno.idAluno join professor on
+                        aluno.fkProfessor = professor.idProfessor
+                        where presenca = 'AUSENTE' and professor.idProfessor = ${idProfessor}
+                        group by mes
+                        having mes = monthname(now());`
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql)
+    return database.executar(instrucaoSql)
+}
+
+function buscarAlunoMaisFaltas(idProfessor){
+    let instrucaoSql = `select monthname(aula.dataAula) mes, count(aula.presenca) as numeroFaltas, aluno.nome as nomeAluno from aula join aluno on
+                        aula.fkAluno = aluno.idAluno join professor on
+                        aluno.fkProfessor = professor.idProfessor
+                        where presenca = 'AUSENTE' and professor.idProfessor = ${idProfessor}
+                        group by mes, nomeAluno
+                        having mes = monthname(now())
+                        order by numeroFaltas desc
+                        limit 1;`
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql)
+    return database.executar(instrucaoSql)
+}
+
 function cadastrarAula(fkAluno, dataAula, horaAula){
     let instrucaoSql = `insert into aula(fkAluno, dataAula, horaAula) values
                         (${fkAluno}, '${dataAula}', '${horaAula}:00')`
@@ -100,6 +137,9 @@ module.exports = {
     buscarQuantidadeAulasMes,
     buscarQtdAulasUltimoMes,
     buscarInstrumentoMaisAulas,
+    buscarQtdFaltasMes,
+    buscarQtdFaltasUltimoMes,
+    buscarAlunoMaisFaltas,
     cadastrarAula,
     removerAula,
     editarAula

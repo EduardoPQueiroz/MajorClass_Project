@@ -12,7 +12,7 @@
 </head>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<body>
+<body onload="obterDadosGrafico(), buscarKpis()">
     <div class="header">
         <img src="../../img/LOGOIMAGE_INVERTIDO.png" alt="" onclick="window.location.href='../initialPage.html'">
         <div class="linksContainer">
@@ -47,19 +47,19 @@
             <div class="kpisContainer">
                 <div class="kpiCard">
                     <p>Total de aulas no último mês:</p>
-                    <p class="responseKpi">30</p>
+                    <p class="responseKpi" id="kpiTotalAulasUltimoMes"></p>
                 </div>
                 <div class="kpiCard">
                     <p>Total de faltas no último mês: </p>
-                    <p class="responseKpi">7</p>
+                    <p class="responseKpi" id="kpiTotalFaltasUltimoMes"></p>
                 </div>
                 <div class="kpiCard">
                     <p>Aluno com mais faltas: </p>
-                    <p class="responseKpi">Matheus Vizzas</p>
+                    <p class="responseKpi" id="kpiAlunoMaisFaltas"></p>
                 </div>
             </div>
             <div class="chartContainer">
-                <canvas id="chartQtdAlunos"></canvas>
+                <canvas id="chartQtdFaltas"></canvas>
             </div>
         </div>
         <div class="chartsMenu">
@@ -90,29 +90,133 @@
 
 </html>
 <script>
-    const ctx = document.getElementById('chartQtdAlunos');
+    function obterDadosGrafico() {
+        let idProfessor = sessionStorage.ID_USUARIO
+        fetch(`/aulas/buscarQtdFaltasMes/${idProfessor}`).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                    resposta.reverse();
 
-    new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ["Abril", "Maio", "Junho", "Julho", "Agosto"],
+                    plotarGrafico(resposta, idProfessor);
+
+                });
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+        }).catch(function (error) {
+            console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+        });
+    }
+
+    function plotarGrafico(resposta, idProfessor) {
+
+        console.log('iniciando plotagem do gráfico...');
+
+        // Criando estrutura para plotar gráfico - labels
+        let labels = [];
+
+        // Criando estrutura para plotar gráfico - dados
+        let dados = {
+            labels: labels,
             datasets: [{
                 label: 'Quantidade de faltas',
                 tension: 0.2,
                 cubicInterpolationMode: 'monotone',
-                data: [3, 0, 1, 5, 7],
+                data: [],
                 borderWidth: 1
-            }]
-        },
-        options: {
+            }],
+        };
+
+        console.log('----------------------------------------------')
+        console.log('Estes dados foram recebidos pela funcao "obterDadosGrafico" e passados para "plotarGrafico":')
+        console.log(resposta)
+
+        // Inserindo valores recebidos em estrutura para plotar o gráfico
+        for (i = 0; i < resposta.length; i++) {
+            var registro = resposta[i];
+            labels.push(registro.mes);
+            dados.datasets[0].data.push(registro.numeroFaltas);
+        }
+
+        console.log('----------------------------------------------')
+        console.log('O gráfico será plotado com os respectivos valores:')
+        console.log('Labels:')
+        console.log(labels)
+        console.log('Dados:')
+        console.log(dados.datasets)
+        console.log('----------------------------------------------')
+
+        // Criando estrutura para plotar gráfico - config
+
+        let opt = {
             responsive: true,
             maintainAspectRatio: false,
             scales: {
                 y: {
                     beginAtZero: true,
-                    max: 10
                 }
             }
         }
-    });
+
+        const config = {
+            type: 'line',
+            data: dados,
+            options: opt
+        };
+
+        // Adicionando gráfico criado em div na tela
+        let myChart = new Chart(
+            document.getElementById('chartQtdFaltas'),
+            config
+        );
+
+    }
+
+
+    function buscarKpis(){
+        let idProfessor = sessionStorage.ID_USUARIO
+        fetch(`/aulas/buscarQtdAulasUltimoMes/${idProfessor}`).then(response =>{
+            if(response.ok){
+                response.json().then(resposta =>{
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                    kpiTotalAulasUltimoMes.innerHTML = resposta[0].qtdAulas
+                })
+            }else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+        })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados: ${error.message}`);
+        });
+
+        fetch(`/aulas/buscarQtdFaltasUltimoMes/${idProfessor}`).then(response =>{
+            if(response.ok){
+                response.json().then(resposta =>{
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                    kpiTotalFaltasUltimoMes.innerHTML = resposta[0].numeroFaltas
+                })
+            }else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+        })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados: ${error.message}`);
+        });
+
+        fetch(`/aulas/buscarAlunoMaisFaltas/${idProfessor}`).then(response =>{
+            if(response.ok){
+                response.json().then(resposta =>{
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                    kpiAlunoMaisFaltas.innerHTML = resposta[0].nomeAluno
+                })
+            }else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+        })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados: ${error.message}`);
+        });
+    }
+
 </script>
