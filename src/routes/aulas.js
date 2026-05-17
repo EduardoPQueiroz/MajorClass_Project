@@ -15,6 +15,18 @@ router.get("/buscarHistoricoAluno/:fkAluno", function(req, res){
     aulaController.buscarHistoricoAulas(req, res);
 })
 
+router.get("/buscarQtdAulasMes/:idProfessor", function(req, res){
+    aulaController.buscarQtdAulasMes(req, res)
+})
+
+router.get("/buscarQtdAulasUltimoMes/:idProfessor", function(req, res){
+    aulaController.buscarQtdAulasUltimoMes(req, res)
+})
+
+router.get("/buscarInstrumentoMaisAulas/:idProfessor", function(req, res){
+    aulaController.buscarInstrumentoMaisAulas(req, res)
+})
+
 router.post("/cadastrarAula", function(req, res){
     aulaController.cadastrarAula(req, res)
 })

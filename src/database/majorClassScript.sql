@@ -46,6 +46,8 @@ create table aula(
 
 
 
+
+
 alter table aula add constraint foreign key (fkAluno) references aluno(idAluno);
 alter table aula add constraint foreign key (fkAulaAnterior) references aula(idAula);
 
@@ -136,10 +138,11 @@ delete from aluno where idAluno = 15;
 
 use majorclass;
 
+-- getHistoricoAulasDoAluno
 select au.dataAula, au.presenca, au.fkAluno, al.nome, i.nome from aula au join aluno al 
 on al.idAluno = au.fkAluno join
 instrumento i on al.fkInstrumento = i.idInstrumento
-where fkAluno = 44;
+where fkAluno = 27 and au.realizada = 1;
 
 select * from aula;
 
@@ -200,6 +203,14 @@ on au.fkAluno = al.idAluno
 inner join instrumento i
 on al.fkInstrumento = i.idInstrumento
 where al.fkProfessor = 100;
+
+-- getqtdAulaMes
+select count(*) as qtdAulas, month(dataAula) as mes from aula au join
+aluno al on au.fkAluno = al.idAluno join professor p
+on al.fkProfessor = p.idProfessor
+where p.idProfessor = 100
+group by mes;
+
 
 -- getAulasByIdProfessor
 select au.idAula, p.nome, al.nome, i.nome from aula au inner join

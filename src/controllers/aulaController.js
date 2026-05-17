@@ -48,6 +48,51 @@ function buscarHistoricoAulas(req, res) {
     })
 }
 
+function buscarQtdAulasMes(req, res){
+    let idProfessor = req.params.idProfessor
+    aulaModel.buscarQuantidadeAulasMes(idProfessor).then(resultado =>{
+        if(resultado.length > 0){
+            res.status(200).json(resultado)
+        }else{
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(error=>{
+        console.log(error);
+        console.log("Houve um erro ao buscar as aulas pelo ID.", error.sqlMessage);
+        res.status(500).json(error.sqlMessage);
+    })
+}
+
+function buscarQtdAulasUltimoMes(req, res){
+    let idProfessor = req.params.idProfessor
+    aulaModel.buscarQtdAulasUltimoMes(idProfessor).then(resultado =>{
+        if(resultado.length > 0){
+            res.status(200).json(resultado)
+        }else{
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(error=>{
+        console.log(error);
+        console.log("Houve um erro ao buscar as aulas pelo ID.", error.sqlMessage);
+        res.status(500).json(error.sqlMessage);
+    })
+}
+
+function buscarInstrumentoMaisAulas(req, res){
+    let idProfessor = req.params.idProfessor
+    aulaModel.buscarInstrumentoMaisAulas(idProfessor).then(resultado =>{
+        if(resultado.length > 0){
+            res.status(200).json(resultado)
+        }else{
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(error=>{
+        console.log(error);
+        console.log("Houve um erro ao buscar as aulas pelo ID.", error.sqlMessage);
+        res.status(500).json(error.sqlMessage);
+    })
+}
+
 function cadastrarAula(req, res) {
     let fkAluno = req.body.fkAlunoServer
     let dataAula = req.body.dataAulaServer
@@ -99,6 +144,9 @@ module.exports = {
     buscarAulasPorProfessor,
     buscarAulaById,
     buscarHistoricoAulas,
+    buscarQtdAulasMes,
+    buscarQtdAulasUltimoMes,
+    buscarInstrumentoMaisAulas,
     cadastrarAula,
     removerAula,
     editarAula
