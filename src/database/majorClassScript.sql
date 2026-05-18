@@ -48,6 +48,7 @@ create table aula(
 
 
 
+
 alter table aula add constraint foreign key (fkAluno) references aluno(idAluno);
 alter table aula add constraint foreign key (fkAulaAnterior) references aula(idAula);
 
@@ -170,7 +171,8 @@ select count(fkInstrumento) as qtdAulasInstrumento, i.nome as nomeInstrumento
 from aluno al inner join instrumento i
 on al.fkInstrumento = i.idInstrumento
 where al.fkProfessor = 103
-group by nomeInstrumento
+group by nomeInstrumento;
+
 order by qtdAulasInstrumento desc
 limit 1;
 
@@ -230,7 +232,7 @@ select au.idAula, p.nome, al.nome, i.nome from aula au inner join
 aluno al on au.fkAluno = al.idAluno inner join
 professor p on al.fkProfessor = p.idProfessor inner join
 instrumento i on al.fkInstrumento = i.idInstrumento
-where p.idProfessor = 102;
+where p.idProfessor = 100;
 
 -- getQTDfaltasMes
 select monthname(aula.dataAula) mes, count(aula.presenca) as numeroFaltas, aluno.nome as nomeAluno from aula join aluno on
@@ -242,6 +244,24 @@ having mes = monthname(now())
 order by numeroFaltas desc
 limit 1;
 
+select count(*) as qtdAulas, monthname(dataAula) as mes, month(dataAula) as numeroMes from aula au join
+                        aluno al on au.fkAluno = al.idAluno join professor p
+                        on al.fkProfessor = p.idProfessor
+                        where p.idProfessor = 100
+                        group by mes, numeroMes
+                        order by numeroMes;
+
+
+select monthname(dataAula) mes, count(presenca) as numeroFaltas from aula join aluno on
+                        aula.fkAluno = aluno.idAluno join professor on
+                        aluno.fkProfessor = professor.idProfessor
+                        where presenca = 'AUSENTE' and professor.idProfessor = 100
+                        group by mes;
+
+select * from aula join aluno on
+aula.fkAluno = aluno.idAluno join professor on
+aluno.fkProfessor = professor.idProfessor 
+where idProfessor = 100;
 
 
 -- getQtdFaltasAlunoMes
@@ -278,16 +298,137 @@ group by diaSemana
 order by qtdAulas desc
 limit 1;
 
-
-
+select count(*) as qtdAulas, week(now()) as semana from 
+aula join aluno on
+aula.fkAluno = aluno.idAluno join professor on
+aluno.fkProfessor = professor.idProfessor
+where idProfessor = 103
+group by semana;
 
 update aluno set email = 'email@gmail.com', 
 						telefone = '11987654321', 
                         fkInstrumento = 3 
                         where idAluno = 6;
 
+-- MASSA DE INSERTS
+
+
+-- PROFESSORES --------------------------------------------------------
+insert into professor (nome, email, senha) values
+('Carlos Mendes', 'carlos@majorclass.com', '123456'),
+('Fernanda Souza', 'fernanda@majorclass.com', '123456'),
+('Ricardo Alves', 'ricardo@majorclass.com', '123456'),
+('Juliana Rocha', 'juliana@majorclass.com', '123456'),
+('Marcos Lima', 'marcos@majorclass.com', '123456');
+
+-- INSTRUMENTOS -------------------------------------------------------
+insert into instrumento (nome, tipoInstrumento) values
+('Violão', 'CORDAS'),
+('Guitarra', 'CORDAS'),
+('Baixo', 'CORDAS'),
+('Piano', 'TECLAS'),
+('Teclado', 'TECLAS'),
+('Bateria', 'PERCUSSAO'),
+('Cajón', 'PERCUSSAO'),
+('Flauta', 'SOPRO'),
+('Saxofone', 'SOPRO'),
+('Trompete', 'SOPRO');
 
 
 
+use majorClass;
+
+-- ALUNOS CADASTRADOS AO LONGO DOS MESES -----------------------------
+
+insert into aluno (nome, email, telefone, sexo, fkProfessor, fkInstrumento, dataCadastro) values
+('Leonardo Silva', 'leonardo@gmail.com', '11981110001', 'M', 100, 1, '2026-01-05'),
+('Marina Souza', 'marina@gmail.com', '11981110002', 'F', 100, 4, '2026-01-08'),
+('Caio Fernandes', 'caio@gmail.com', '11981110003', 'M', 100, 2, '2026-01-15'),
+
+('Amanda Ribeiro', 'amanda@gmail.com', '11981110004', 'F', 100, 3, '2026-02-03'),
+('Gustavo Lima', 'gustavo@gmail.com', '11981110005', 'M', 100, 5, '2026-02-10'),
+
+('Natália Costa', 'natalia@gmail.com', '11981110006', 'F', 100, 1, '2026-03-02'),
+('Vinicius Rocha', 'vinicius@gmail.com', '11981110007', 'M', 100, 6, '2026-03-18'),
+
+('Eduarda Martins', 'eduarda@gmail.com', '11981110008', 'F', 100, 4, '2026-04-07'),
+
+('Felipe Santos', 'felipe.s@gmail.com', '11981110009', 'M', 100, 2, '2026-05-04');
 
 
+
+insert into aula (dataAula, horaAula, presenca, realizada, fkAluno, fkAulaAnterior) values
+
+('2026-01-06', '09:00:00', 'PRESENTE', 1, 21, null),
+('2026-01-08', '10:00:00', 'PRESENTE', 1, 22, null),
+('2026-01-16', '11:00:00', 'PRESENTE', 1, 23, null),
+
+('2026-01-13', '09:00:00', 'PRESENTE', 1, 21, null),
+('2026-01-15', '10:00:00', 'AUSENTE', 1, 22, null),
+('2026-01-23', '11:00:00', 'PRESENTE', 1, 23, null),
+
+('2026-01-20', '09:00:00', 'PRESENTE', 1, 21, null),
+('2026-01-22', '10:00:00', 'PRESENTE', 1, 22, null),
+('2026-01-30', '11:00:00', 'FALTA JUSTIFICADA', 1, 23, null),
+
+('2026-02-04', '14:00:00', 'PRESENTE', 1, 24, null),
+('2026-02-11', '15:00:00', 'PRESENTE', 1, 25, null),
+
+('2026-02-06', '09:00:00', 'PRESENTE', 1, 21, null),
+('2026-02-12', '10:00:00', 'PRESENTE', 1, 22, null),
+('2026-02-13', '11:00:00', 'PRESENTE', 1, 23, null),
+
+('2026-02-18', '14:00:00', 'PRESENTE', 1, 24, null),
+('2026-02-25', '15:00:00', 'AUSENTE', 1, 25, null),
+
+('2026-03-03', '09:00:00', 'PRESENTE', 1, 26, null),
+('2026-03-19', '10:00:00', 'PRESENTE', 1, 27, null),
+
+('2026-03-05', '11:00:00', 'PRESENTE', 1, 21, null),
+('2026-03-10', '14:00:00', 'PRESENTE', 1, 22, null),
+('2026-03-12', '15:00:00', 'PRESENTE', 1, 23, null),
+
+('2026-03-17', '09:00:00', 'PRESENTE', 1, 24, null),
+('2026-03-24', '10:00:00', 'FALTA JUSTIFICADA', 1, 25, null),
+('2026-03-26', '11:00:00', 'PRESENTE', 1, 26, null),
+('2026-03-31', '14:00:00', 'PRESENTE', 1, 27, null),
+('2026-04-08', '15:00:00', 'PRESENTE', 1, 28, null),
+
+('2026-04-02', '09:00:00', 'PRESENTE', 1, 21, null),
+('2026-04-07', '10:00:00', 'PRESENTE', 1, 22, null),
+('2026-04-09', '11:00:00', 'AUSENTE', 1, 23, null),
+
+('2026-04-14', '14:00:00', 'PRESENTE', 1, 24, null),
+('2026-04-16', '15:00:00', 'PRESENTE', 1, 25, null),
+
+('2026-04-21', '09:00:00', 'PRESENTE', 1, 26, null),
+('2026-04-23', '10:00:00', 'PRESENTE', 1, 27, null),
+('2026-04-28', '11:00:00', 'PRESENTE', 1, 28, null),
+('2026-05-05', '14:00:00', 'PRESENTE', 1, 29, null),
+
+('2026-05-07', '09:00:00', 'PRESENTE', 1, 21, null),
+('2026-05-12', '10:00:00', 'PRESENTE', 1, 22, null),
+('2026-05-14', '11:00:00', 'PRESENTE', 1, 23, null),
+
+('2026-05-19', '14:00:00', 'PRESENTE', 1, 24, null),
+('2026-05-21', '15:00:00', 'FALTA JUSTIFICADA', 1, 25, null),
+
+('2026-05-26', '09:00:00', 'PRESENTE', 1, 26, null),
+('2026-05-27', '10:00:00', 'PRESENTE', 1, 27, null),
+('2026-05-28', '11:00:00', 'PRESENTE', 1, 28, null),
+('2026-05-29', '14:00:00', 'PRESENTE', 1, 29, null);
+
+insert into aula (dataAula, horaAula, presenca, realizada, fkAluno, fkAulaAnterior) values
+
+('2026-01-09', '09:00:00', 'AUSENTE', 1, 11, null),
+('2026-01-22', '10:00:00', 'AUSENTE', 1, 16, null),
+
+('2026-02-05', '11:00:00', 'AUSENTE', 1, 1, null),
+('2026-02-19', '14:00:00', 'AUSENTE', 1, 6, null),
+
+('2026-03-04', '15:00:00', 'AUSENTE', 1, 11, null),
+('2026-03-18', '09:00:00', 'AUSENTE', 1, 16, null),
+
+('2026-04-02', '10:00:00', 'AUSENTE', 1, 29, null),
+('2026-04-16', '11:00:00', 'AUSENTE', 1, 29, null),
+('2026-04-29', '14:00:00', 'AUSENTE', 1, 30, null);
