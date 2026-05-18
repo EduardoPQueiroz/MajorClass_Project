@@ -23,6 +23,10 @@ router.get("/getInstrumentoMaisAulas/:idProfessor", function(req, res){
     alunoController.getInstrumentoMaisAulas(req, res)
 })
 
+router.get("/buscarQtdAlunosPorInstrumento/:idProfessor", function(req, res){
+    alunoController.buscarQtdAlunosPorInstrumento(req, res)
+})
+
 router.post('/cadastrarAluno', function(req, res){
     alunoController.cadastrarAlunos(req, res)
 })

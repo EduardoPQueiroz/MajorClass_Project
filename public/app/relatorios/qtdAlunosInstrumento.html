@@ -12,7 +12,7 @@
 </head>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<body>
+<body onload="obterDadosGrafico(), buscarKpis()">
     <div class="header">
         <img src="../../img/LOGOIMAGE_INVERTIDO.png" alt="" onclick="window.location.href='../initialPage.html'">
         <div class="linksContainer">
@@ -47,19 +47,22 @@
             <div class="kpisContainer">
                 <div class="kpiCard">
                     <p>Instrumento com mais aulas:</p>
-                    <p class="responseKpi">TECLADO</p>
+                    <p class="responseKpi" id="kpiInstrumentoMaisAulas"></p>
+                    <p>(Nesse mês)</p>
                 </div>
                 <div class="kpiCard">
                     <p>Instrumento com menos aulas: </p>
-                    <p class="responseKpi">CONTRABAIXO</p>
+                    <p class="responseKpi" id="kpiInstrumentoMenosAulas"></p>
+                    <p>(Nesse mês)</p>
                 </div>
                 <div class="kpiCard">
-                    <p>Maior demanda por instrumento: </p>
-                    <p class="responseKpi">9</p>
+                    <p>Maior demanda aulas/instrumento: </p>
+                    <p class="responseKpi" id="kpiMaiorDemanda"></p>
+                    <p>(Nesse mês)</p>
                 </div>
             </div>
             <div class="chartContainer">
-                <canvas id="chartQtdAlunos"></canvas>
+                <canvas id="chartQtdAulasByInstrumento"></canvas>
             </div>
         </div>
         <div class="chartsMenu">
@@ -90,35 +93,174 @@
 
 </html>
 <script>
-    const ctx = document.getElementById('chartQtdAlunos');
+    function obterDadosGrafico() {
+        let idProfessor = sessionStorage.ID_USUARIO
+        fetch(`/alunos/buscarQtdAlunosPorInstrumento/${idProfessor}`).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                    // resposta.reverse();
 
-    new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-            labels: ["Teclado", "Violão", "Guitarra", "Contrabaixo"],
+                    plotarGrafico(resposta, idProfessor);
+
+                });
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+        }).catch(function (error) {
+            console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+        });
+    }
+
+    function plotarGrafico(resposta, idProfessor) {
+
+        console.log('iniciando plotagem do gráfico...');
+
+        // Criando estrutura para plotar gráfico - labels
+        let labels = [];
+
+        // Criando estrutura para plotar gráfico - dados
+        let dados = {
+            labels: labels,
             datasets: [{
                 label: 'Quantidade de alunos',
                 tension: 0.2,
                 cubicInterpolationMode: 'monotone',
-                data: [9, 3, 4, 2],
+                data: [],
                 backgroundColor: [
-                    'rgba(2, 2, 64, 0.7)',
-                    'rgba(2, 255, 255, 0.5)',
-                    'rgba(0, 127, 255, 0.7)',
-                    'rgba(99, 0, 255, 0.7)'
+                    'rgba(2, 2, 64, 0.7)',      
+                    'rgba(2, 255, 255, 0.5)',   
+                    'rgba(0, 127, 255, 0.7)',   
+                    'rgba(99, 0, 255, 0.7)',    
+                    'rgba(0, 191, 255, 0.7)',   
+                    'rgba(30, 144, 255, 0.7)',  
+                    'rgba(65, 105, 225, 0.7)',  
+                    'rgba(0, 206, 209, 0.6)',   
+                    'rgba(70, 130, 180, 0.7)',  
+                    'rgba(25, 25, 112, 0.7)',   
+                    'rgba(135, 206, 250, 0.6)', 
+                    'rgba(72, 61, 139, 0.7)'    
                 ],
                 borderWidth: 1
-            }]
-        },
-        options: {
+            }],
+        };
+
+        console.log('----------------------------------------------')
+        console.log('Estes dados foram recebidos pela funcao "obterDadosGrafico" e passados para "plotarGrafico":')
+        console.log(resposta)
+
+        // Inserindo valores recebidos em estrutura para plotar o gráfico
+        for (i = 0; i < resposta.length; i++) {
+            var registro = resposta[i];
+            labels.push(registro.nomeInstrumento);
+            dados.datasets[0].data.push(registro.qtdAulasInstrumento);
+        }
+
+        console.log('----------------------------------------------')
+        console.log('O gráfico será plotado com os respectivos valores:')
+        console.log('Labels:')
+        console.log(labels)
+        console.log('Dados:')
+        console.log(dados.datasets)
+        console.log('----------------------------------------------')
+
+        // Criando estrutura para plotar gráfico - config
+
+        let opt = {
             responsive: true,
             maintainAspectRatio: false,
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    max: 10
-                }
-            }
         }
-    });
+
+        const config = {
+            type: 'doughnut',
+            data: dados,
+            options: opt
+        };
+
+        // Adicionando gráfico criado em div na tela
+        let myChart = new Chart(
+            document.getElementById('chartQtdAulasByInstrumento'),
+            config
+        );
+
+    }
+
+    function buscarKpis(){
+        let idProfessor = sessionStorage.ID_USUARIO
+        fetch(`/aulas/buscarInstrumentoMaisAulas/${idProfessor}`).then(response =>{
+            if(response.ok){
+                response.json().then(resposta =>{
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                    kpiInstrumentoMaisAulas.innerHTML = resposta[0].nomeInstrumento
+                })
+            }else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+        })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados: ${error.message}`);
+        });
+
+        fetch(`/aulas/buscarInstrumentoMenosAulas/${idProfessor}`).then(response =>{
+            if(response.ok){
+                response.json().then(resposta =>{
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                    kpiInstrumentoMenosAulas.innerHTML = resposta[0].nomeInstrumento
+                })
+            }else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+        })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados: ${error.message}`);
+        });
+
+
+
+        fetch(`/aulas/buscarInstrumentoMaisAulas/${idProfessor}`).then(response =>{
+            if(response.ok){
+                response.json().then(resposta =>{
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                    kpiMaiorDemanda.innerHTML = resposta[0].qtdAulas
+                })
+            }else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+        })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados: ${error.message}`);
+        });
+
+    }
+
+    // const ctx = document.getElementById('chartQtdAlunos');
+
+    // new Chart(ctx, {
+    //     type: 'doughnut',
+    //     data: {
+    //         labels: ["Teclado", "Violão", "Guitarra", "Contrabaixo"],
+    //         datasets: [{
+    //             label: 'Quantidade de alunos',
+    //             tension: 0.2,
+    //             cubicInterpolationMode: 'monotone',
+    //             data: [9, 3, 4, 2],
+    //             backgroundColor: [
+    //                 'rgba(2, 2, 64, 0.7)',
+    //                 'rgba(2, 255, 255, 0.5)',
+    //                 'rgba(0, 127, 255, 0.7)',
+    //                 'rgba(99, 0, 255, 0.7)'
+    //             ],
+    //             borderWidth: 1
+    //         }]
+    //     },
+    //     options: {
+    //         responsive: true,
+    //         maintainAspectRatio: false,
+    //         scales: {
+    //             y: {
+    //                 beginAtZero: true,
+    //             }
+    //         }
+    //     }
+    // });
 </script>

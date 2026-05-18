@@ -93,6 +93,21 @@ function buscarInstrumentoMaisAulas(req, res){
     })
 }
 
+function buscarInstrumentoMenosAulas(req, res){
+    let idProfessor = req.params.idProfessor
+    aulaModel.buscarInstrumentoMenosAulas(idProfessor).then(resultado =>{
+        if(resultado.length > 0){
+            res.status(200).json(resultado)
+        }else{
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(error=>{
+        console.log(error);
+        console.log("Houve um erro ao buscar as aulas pelo ID.", error.sqlMessage);
+        res.status(500).json(error.sqlMessage);
+    })
+}
+
 function buscarQtdFaltasMes(req, res){
     let idProfessor = req.params.idProfessor
     aulaModel.buscarQtdFaltasMes(idProfessor).then(resultado =>{
@@ -252,6 +267,7 @@ module.exports = {
     buscarQtdAulasMes,
     buscarQtdAulasUltimoMes,
     buscarInstrumentoMaisAulas,
+    buscarInstrumentoMenosAulas,
     buscarQtdFaltasMes,
     buscarQtdFaltasUltimoMes,
     buscarAlunoMaisFaltas,

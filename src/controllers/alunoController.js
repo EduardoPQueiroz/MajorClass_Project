@@ -84,6 +84,22 @@ function getInstrumentoMaisAulas(req, res) {
     });
 }
 
+function buscarQtdAlunosPorInstrumento(req, res){
+    var idProfessor = req.params.idProfessor;
+
+    alunoModel.buscarQtdAlunosPorInstrumento(idProfessor).then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar o total de alunos do professor.", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
 //MÉTODOS POST
 
 function cadastrarAlunos(req, res){
@@ -164,6 +180,7 @@ module.exports = {
     getQtdNovosAlunosUltimoMes,
     getTotalAlunosByIdProfessor,
     getInstrumentoMaisAulas,
+    buscarQtdAlunosPorInstrumento,
     cadastrarAlunos,
     removerAluno,
     editarAluno

@@ -27,6 +27,10 @@ router.get("/buscarInstrumentoMaisAulas/:idProfessor", function(req, res){
     aulaController.buscarInstrumentoMaisAulas(req, res)
 })
 
+router.get("/buscarInstrumentoMenosAulas/:idProfessor", function(req, res){
+    aulaController.buscarInstrumentoMenosAulas(req, res)
+})
+
 router.get("/buscarQtdFaltasMes/:idProfessor", function(req, res){
     aulaController.buscarQtdFaltasMes(req, res)
 })

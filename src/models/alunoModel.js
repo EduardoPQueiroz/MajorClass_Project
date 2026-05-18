@@ -53,6 +53,17 @@ function getInstrumentoMaisAulas(idProfessor){
     return database.executar(instrucaoSql)
 }
 
+function buscarQtdAlunosPorInstrumento(idProfessor){
+    instrucaoSql = `select count(fkInstrumento) as qtdAulasInstrumento, i.nome as nomeInstrumento
+                    from aluno al inner join instrumento i
+                    on al.fkInstrumento = i.idInstrumento
+                    where al.fkProfessor = 103
+                    group by nomeInstrumento;`
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql)
+    return database.executar(instrucaoSql)
+}
+
 //MÉTODOS POST
 
 function cadastrarAlunos(nome, email, telefone, sexo, fkProfessor, fkInstrumento) {
@@ -87,6 +98,7 @@ module.exports = {
     getQtdNovosAlunosUltimoMes,
     getTotalAlunosByIdProfessor,
     getInstrumentoMaisAulas,
+    buscarQtdAlunosPorInstrumento,
     cadastrarAlunos,
     removerAluno,
     editarAluno

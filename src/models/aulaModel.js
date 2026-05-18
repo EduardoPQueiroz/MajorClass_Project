@@ -69,6 +69,21 @@ function buscarInstrumentoMaisAulas(idProfessor){
     return database.executar(instrucaoSql)
 }
 
+function buscarInstrumentoMenosAulas(idProfessor){
+    let instrucaoSql = `select count(*) as qtdAulas, monthname(dataAula) as mes, i.nome as nomeInstrumento from aula au join
+                        aluno al on au.fkAluno = al.idAluno join professor p
+                        on al.fkProfessor = p.idProfessor join instrumento i
+                        on al.fkInstrumento = i.idInstrumento
+                        where p.idProfessor = ${idProfessor}
+                        group by mes, nomeInstrumento
+                        having mes = monthname(now())
+                        order by qtdAulas
+                        limit 1`
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql)
+    return database.executar(instrucaoSql)
+}
+
 function buscarQtdFaltasMes(idProfessor){
     let instrucaoSql = `select monthname(dataAula) mes, count(presenca) as numeroFaltas from aula join aluno on
                         aula.fkAluno = aluno.idAluno join professor on
@@ -192,6 +207,7 @@ module.exports = {
     buscarQuantidadeAulasMes,
     buscarQtdAulasUltimoMes,
     buscarInstrumentoMaisAulas,
+    buscarInstrumentoMenosAulas,
     buscarQtdFaltasMes,
     buscarQtdFaltasUltimoMes,
     buscarAlunoMaisFaltas,
