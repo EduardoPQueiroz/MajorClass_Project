@@ -124,12 +124,13 @@ function buscarAlunoMaisFaltas(idProfessor){
 }
 
 function buscarQtdAulasDiaSemana(idProfessor){
-    let instrucaoSql = `select count(*) as qtdAulas, weekday(dataAula) as diaSemana from 
+    let instrucaoSql = `select count(*) as qtdAulas, weekday(dataAula) as diaSemana, yearweek(dataAula, 1) as semana  from 
                         aula join aluno on
                         aula.fkAluno = aluno.idAluno join professor on
                         aluno.fkProfessor = professor.idProfessor
                         where idProfessor = ${idProfessor}
-                        group by diaSemana
+                        group by diaSemana, semana
+                        having semana = yearweek(now(), 1)
                         order by diaSemana;`
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql)
@@ -137,12 +138,13 @@ function buscarQtdAulasDiaSemana(idProfessor){
 }
 
 function buscarDiaMaisAulas(idProfessor){
-    let instrucaoSql = `select count(*) as qtdAulas, weekday(dataAula) as diaSemana from 
+    let instrucaoSql = `select count(*) as qtdAulas, weekday(dataAula) as diaSemana, yearweek(dataAula, 1) as semana from 
                         aula join aluno on
                         aula.fkAluno = aluno.idAluno join professor on
                         aluno.fkProfessor = professor.idProfessor
                         where idProfessor = ${idProfessor}
-                        group by diaSemana
+                        group by diaSemana, semana
+                        having semana = yearweek(now(), 1)
                         order by qtdAulas desc
                         limit 1;`
 
@@ -151,12 +153,13 @@ function buscarDiaMaisAulas(idProfessor){
 }
 
 function buscarDiaMenosAulas(idProfessor){
-    let instrucaoSql = `select count(*) as qtdAulas, weekday(dataAula) as diaSemana from 
+    let instrucaoSql = `select count(*) as qtdAulas, weekday(dataAula) as diaSemana, yearweek(dataAula, 1) as semana from 
                         aula join aluno on
                         aula.fkAluno = aluno.idAluno join professor on
                         aluno.fkProfessor = professor.idProfessor
                         where idProfessor = ${idProfessor}
-                        group by diaSemana
+                        group by diaSemana, semana
+                        having semana = yearweek(now(), 1)
                         order by qtdAulas
                         limit 1;`
 
@@ -165,12 +168,13 @@ function buscarDiaMenosAulas(idProfessor){
 }
 
 function buscarTotalSemana(idProfessor){
-    let instrucaoSql = `select count(*) as qtdAulas, week(now()) as semana from 
+    let instrucaoSql = `select count(*) as qtdAulas, yearweek(dataAula, 1) as semana from 
                         aula join aluno on
                         aula.fkAluno = aluno.idAluno join professor on
                         aluno.fkProfessor = professor.idProfessor
                         where idProfessor = ${idProfessor}
-                        group by semana;`
+                        group by semana
+                        having semana = yearweek(now(), 1);`
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql)
     return database.executar(instrucaoSql)

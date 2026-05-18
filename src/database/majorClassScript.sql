@@ -252,11 +252,12 @@ select count(*) as qtdAulas, monthname(dataAula) as mes, month(dataAula) as nume
                         order by numeroMes;
 
 
-select monthname(dataAula) mes, count(presenca) as numeroFaltas from aula join aluno on
+select monthname(dataAula) mes, count(presenca) as numeroFaltas, month(dataAula) as numeroMes from aula join aluno on
                         aula.fkAluno = aluno.idAluno join professor on
                         aluno.fkProfessor = professor.idProfessor
                         where presenca = 'AUSENTE' and professor.idProfessor = 100
-                        group by mes;
+                        group by mes, numeroMes
+                        order by numeroMes;
 
 select * from aula join aluno on
 aula.fkAluno = aluno.idAluno join professor on
@@ -285,7 +286,7 @@ select count(*) as qtdAulas, weekday(dataAula) as diaSemana from
 aula join aluno on
 aula.fkAluno = aluno.idAluno join professor on
 aluno.fkProfessor = professor.idProfessor
-where idProfessor = 103
+where idProfessor = 100
 group by diaSemana
 order by diaSemana;
 
@@ -293,16 +294,16 @@ select count(*) as qtdAulas, weekday(dataAula) as diaSemana from
 aula join aluno on
 aula.fkAluno = aluno.idAluno join professor on
 aluno.fkProfessor = professor.idProfessor
-where idProfessor = 103
+where idProfessor = 100
 group by diaSemana
 order by qtdAulas desc
 limit 1;
 
-select count(*) as qtdAulas, week(now()) as semana from 
+select count(*) as qtdAulas, weekofyear(now()) as semana from 
 aula join aluno on
 aula.fkAluno = aluno.idAluno join professor on
 aluno.fkProfessor = professor.idProfessor
-where idProfessor = 103
+where idProfessor = 100
 group by semana;
 
 update aluno set email = 'email@gmail.com', 
