@@ -57,7 +57,7 @@ function buscarQtdAlunosPorInstrumento(idProfessor){
     instrucaoSql = `select count(fkInstrumento) as qtdAulasInstrumento, i.nome as nomeInstrumento
                     from aluno al inner join instrumento i
                     on al.fkInstrumento = i.idInstrumento
-                    where al.fkProfessor = 103
+                    where al.fkProfessor = ${idProfessor}
                     group by nomeInstrumento;`
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql)
