@@ -242,6 +242,8 @@ having mes = monthname(now())
 order by numeroFaltas desc
 limit 1;
 
+
+
 -- getQtdFaltasAlunoMes
 select al.nome, month(au.dataAula) mes, count(presenca) as numeroFaltas from aula au 
 inner join aluno al
@@ -257,7 +259,27 @@ where presenca = 'AUSENTE'
 group by al.nome;
 
 SET lc_time_names = 'pt_BR';
-select DATE_FORMAT(dataAula, '%W') as diaSemana from aula;
+
+-- getQtdAulasDiaSemana
+select count(*) as qtdAulas, weekday(dataAula) as diaSemana from 
+aula join aluno on
+aula.fkAluno = aluno.idAluno join professor on
+aluno.fkProfessor = professor.idProfessor
+where idProfessor = 103
+group by diaSemana
+order by diaSemana;
+
+select count(*) as qtdAulas, weekday(dataAula) as diaSemana from 
+aula join aluno on
+aula.fkAluno = aluno.idAluno join professor on
+aluno.fkProfessor = professor.idProfessor
+where idProfessor = 103
+group by diaSemana
+order by qtdAulas desc
+limit 1;
+
+
+
 
 update aluno set email = 'email@gmail.com', 
 						telefone = '11987654321', 

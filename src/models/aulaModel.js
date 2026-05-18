@@ -106,6 +106,61 @@ function buscarAlunoMaisFaltas(idProfessor){
     return database.executar(instrucaoSql)
 }
 
+function buscarQtdAulasDiaSemana(idProfessor){
+    let instrucaoSql = `select count(*) as qtdAulas, weekday(dataAula) as diaSemana from 
+                        aula join aluno on
+                        aula.fkAluno = aluno.idAluno join professor on
+                        aluno.fkProfessor = professor.idProfessor
+                        where idProfessor = ${idProfessor}
+                        group by diaSemana
+                        order by diaSemana;`
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql)
+    return database.executar(instrucaoSql)
+}
+
+function buscarDiaMaisAulas(idProfessor){
+    let instrucaoSql = `select count(*) as qtdAulas, weekday(dataAula) as diaSemana from 
+                        aula join aluno on
+                        aula.fkAluno = aluno.idAluno join professor on
+                        aluno.fkProfessor = professor.idProfessor
+                        where idProfessor = ${idProfessor}
+                        group by diaSemana
+                        order by qtdAulas desc
+                        limit 1;`
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql)
+    return database.executar(instrucaoSql)
+}
+
+function buscarDiaMenosAulas(idProfessor){
+    let instrucaoSql = `select count(*) as qtdAulas, weekday(dataAula) as diaSemana from 
+                        aula join aluno on
+                        aula.fkAluno = aluno.idAluno join professor on
+                        aluno.fkProfessor = professor.idProfessor
+                        where idProfessor = ${idProfessor}
+                        group by diaSemana
+                        order by qtdAulas
+                        limit 1;`
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql)
+    return database.executar(instrucaoSql)
+}
+
+function buscarTotalSemana(idProfessor){
+    let instrucaoSql = `select count(*) as qtdAulas, week(now()) as semana from 
+                        aula join aluno on
+                        aula.fkAluno = aluno.idAluno join professor on
+                        aluno.fkProfessor = professor.idProfessor
+                        where idProfessor = ${idProfessor}
+                        group by semana;`
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql)
+    return database.executar(instrucaoSql)
+}
+
+
+
 function cadastrarAula(fkAluno, dataAula, horaAula){
     let instrucaoSql = `insert into aula(fkAluno, dataAula, horaAula) values
                         (${fkAluno}, '${dataAula}', '${horaAula}:00')`
@@ -140,6 +195,10 @@ module.exports = {
     buscarQtdFaltasMes,
     buscarQtdFaltasUltimoMes,
     buscarAlunoMaisFaltas,
+    buscarQtdAulasDiaSemana,
+    buscarDiaMaisAulas,
+    buscarDiaMenosAulas,
+    buscarTotalSemana,
     cadastrarAula,
     removerAula,
     editarAula

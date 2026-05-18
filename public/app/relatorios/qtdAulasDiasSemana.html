@@ -12,7 +12,7 @@
 </head>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<body>
+<body onload="obterDadosGrafico(), buscarKpis()">
     <div class="header">
         <img src="../../img/LOGOIMAGE_INVERTIDO.png" alt="" onclick="window.location.href='../initialPage.html'">
         <div class="linksContainer">
@@ -47,19 +47,19 @@
             <div class="kpisContainer">
                 <div class="kpiCard">
                     <p>Dia com mais aulas:</p>
-                    <p class="responseKpi">Terça-Feira</p>
+                    <p class="responseKpi" id="kpiDiaMaisAulas"></p>
                 </div>
                 <div class="kpiCard">
                     <p>Dia com menos aulas: </p>
-                    <p class="responseKpi">Sexta-feira</p>
+                    <p class="responseKpi" id="kpiDiaMenosAulas"></p>
                 </div>
                 <div class="kpiCard">
-                    <p>Total de aulas semanais: </p>
-                    <p class="responseKpi">21</p>
+                    <p>Total de aulas nessa semana: </p>
+                    <p class="responseKpi" id="kpiTotalAulasSemana"></p>
                 </div>
             </div>
             <div class="chartContainer">
-                <canvas id="chartQtdAlunos"></canvas>
+                <canvas id="chartQtdAulasDiaSemana"></canvas>
             </div>
         </div>
         <div class="chartsMenu">
@@ -90,29 +90,216 @@
 
 </html>
 <script>
-    const ctx = document.getElementById('chartQtdAlunos');
 
-    new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ["Segunda", "Terça", "Quarta", "Quinta", "Sexta"],
+    function obterDadosGrafico() {
+        let idProfessor = sessionStorage.ID_USUARIO
+        fetch(`/aulas/buscarQtdAulasDiaSemana/${idProfessor}`).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                    // resposta.reverse();
+
+                    plotarGrafico(resposta, idProfessor);
+
+                });
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+        }).catch(function (error) {
+            console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+        });
+    }
+
+    function plotarGrafico(resposta, idProfessor) {
+
+        console.log('iniciando plotagem do gráfico...');
+
+        // Criando estrutura para plotar gráfico - labels
+        let labels = [];
+
+        // Criando estrutura para plotar gráfico - dados
+        let dados = {
+            labels: labels,
             datasets: [{
                 label: 'Quantidade de aulas',
                 tension: 0.2,
                 cubicInterpolationMode: 'monotone',
-                data: [5, 8, 3, 4, 1],
+                data: [],
                 borderWidth: 1
-            }]
-        },
-        options: {
+            }],
+        };
+
+        console.log('----------------------------------------------')
+        console.log('Estes dados foram recebidos pela funcao "obterDadosGrafico" e passados para "plotarGrafico":')
+        console.log(resposta)
+
+        // Inserindo valores recebidos em estrutura para plotar o gráfico
+        for (i = 0; i < resposta.length; i++) {
+            var registro = resposta[i];
+            if (registro.diaSemana == 0) {
+                labels.push('Segunda')
+            }
+            if (registro.diaSemana == 1) {
+                labels.push('Terça')
+            }
+            if (registro.diaSemana == 2) {
+                labels.push('Quarta')
+            }
+            if (registro.diaSemana == 3) {
+                labels.push('Quinta')
+            }
+            if (registro.diaSemana == 4) {
+                labels.push('Sexta')
+            }
+            if (registro.diaSemana == 5) {
+                labels.push('Sábado')
+            }
+            if (registro.diaSemana == 6) {
+                labels.push('Domingo')
+            }
+            dados.datasets[0].data.push(registro.qtdAulas);
+        }
+
+        console.log('----------------------------------------------')
+        console.log('O gráfico será plotado com os respectivos valores:')
+        console.log('Labels:')
+        console.log(labels)
+        console.log('Dados:')
+        console.log(dados.datasets)
+        console.log('----------------------------------------------')
+
+        // Criando estrutura para plotar gráfico - config
+
+        let opt = {
             responsive: true,
             maintainAspectRatio: false,
             scales: {
                 y: {
                     beginAtZero: true,
-                    max: 10
-                }
+                },
             }
         }
-    });
+
+        const config = {
+            type: 'bar',
+            data: dados,
+            options: opt
+        };
+
+        // Adicionando gráfico criado em div na tela
+        let myChart = new Chart(
+            document.getElementById('chartQtdAulasDiaSemana'),
+            config
+        );
+    }
+
+
+    function buscarKpis() {
+        let idProfessor = sessionStorage.ID_USUARIO
+        fetch(`/aulas/buscarDiaMaisAulas/${idProfessor}`).then(response => {
+            if (response.ok) {
+                response.json().then(resposta => {
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                    if (resposta[0].diaSemana == 0) {
+                        kpiDiaMaisAulas.innerHTML = 'Segunda'
+                    }
+                    if (resposta[0].diaSemana == 1) {
+                        kpiDiaMaisAulas.innerHTML = 'Terça'
+                    }
+                    if (resposta[0].diaSemana == 2) {
+                        kpiDiaMaisAulas.innerHTML = 'Quarta'
+                    }
+                    if (resposta[0].diaSemana == 3) {
+                        kpiDiaMaisAulas.innerHTML = 'Quinta'
+                    }
+                    if (resposta[0].diaSemana == 4) {
+                        kpiDiaMaisAulas.innerHTML = 'Sexta'
+                    }
+                    if (resposta[0].diaSemana == 5) {
+                        kpiDiaMaisAulas.innerHTML = 'Sábado'
+                    }
+                    if (resposta[0].diaSemana == 6) {
+                        kpiDiaMaisAulas.innerHTML = 'Domingo'
+                    }
+                })
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+        }).catch(function (error) {
+            console.error(`Erro na obtenção dos dados: ${error.message}`);
+        });
+
+        fetch(`/aulas/buscarDiaMenosAulas/${idProfessor}`).then(response => {
+            if (response.ok) {
+                response.json().then(resposta => {
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                    if (resposta[0].diaSemana == 0) {
+                        kpiDiaMenosAulas.innerHTML = 'Segunda'
+                    }
+                    if (resposta[0].diaSemana == 1) {
+                        kpiDiaMenosAulas.innerHTML = 'Terça'
+                    }
+                    if (resposta[0].diaSemana == 2) {
+                        kpiDiaMenosAulas.innerHTML = 'Quarta'
+                    }
+                    if (resposta[0].diaSemana == 3) {
+                        kpiDiaMenosAulas.innerHTML = 'Quinta'
+                    }
+                    if (resposta[0].diaSemana == 4) {
+                        kpiDiaMenosAulas.innerHTML = 'Sexta'
+                    }
+                    if (resposta[0].diaSemana == 5) {
+                        kpiDiaMenosAulas.innerHTML = 'Sábado'
+                    }
+                    if (resposta[0].diaSemana == 6) {
+                        kpiDiaMenosAulas.innerHTML = 'Domingo'
+                    }
+                })
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+        }).catch(function (error) {
+            console.error(`Erro na obtenção dos dados: ${error.message}`);
+        });
+
+        fetch(`/aulas/buscarTotalSemana/${idProfessor}`).then(response => {
+            if (response.ok) {
+                response.json().then(resposta => {
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                    kpiTotalAulasSemana.innerHTML = resposta[0].qtdAulas
+                })
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+        }).catch(function (error) {
+            console.error(`Erro na obtenção dos dados: ${error.message}`);
+        });
+
+    }
+
+    // const ctx = document.getElementById('chartQtdAlunos');
+
+    // new Chart(ctx, {
+    //     type: 'bar',
+    //     data: {
+    //         labels: ["Segunda", "Terça", "Quarta", "Quinta", "Sexta"],
+    //         datasets: [{
+    //             label: 'Quantidade de aulas',
+    //             tension: 0.2,
+    //             cubicInterpolationMode: 'monotone',
+    //             data: [5, 8, 3, 4, 1],
+    //             borderWidth: 1
+    //         }]
+    //     },
+    //     options: {
+    //         responsive: true,
+    //         maintainAspectRatio: false,
+    //         scales: {
+    //             y: {
+    //                 beginAtZero: true,
+    //                 max: 10
+    //             }
+    //         }
+    //     }
+    // });
 </script>

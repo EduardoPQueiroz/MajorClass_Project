@@ -40,6 +40,22 @@ router.get("/buscarAlunoMaisFaltas/:idProfessor", function(req, res){
     aulaController.buscarAlunoMaisFaltas(req, res)
 })
 
+router.get("/buscarQtdAulasDiaSemana/:idProfessor", function(req, res){
+    aulaController.buscarAulaDiaSemana(req, res)
+})
+
+router.get("/buscarDiaMaisAulas/:idProfessor", function(req, res){
+    aulaController.buscarDiaMaisAulas(req, res)
+})
+
+router.get("/buscarDiaMenosAulas/:idProfessor", function(req, res){
+    aulaController.buscarDiaMenosAulas(req, res)
+})
+
+router.get("/buscarTotalSemana/:idProfessor", function(req, res){
+    aulaController.buscarTotalSemana(req, res)
+})
+
 router.post("/cadastrarAula", function(req, res){
     aulaController.cadastrarAula(req, res)
 })

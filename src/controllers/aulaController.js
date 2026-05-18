@@ -138,6 +138,66 @@ function buscarAlunoMaisFaltas(req, res){
     })
 }
 
+function buscarAulaDiaSemana(req, res){
+    let idProfessor = req.params.idProfessor
+    aulaModel.buscarQtdAulasDiaSemana(idProfessor).then(resultado =>{
+        if(resultado.length > 0){
+            res.status(200).json(resultado)
+        }else{
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(error=>{
+        console.log(error);
+        console.log("Houve um erro ao buscar as aulas pelo ID.", error.sqlMessage);
+        res.status(500).json(error.sqlMessage);
+    })
+}
+
+function buscarDiaMaisAulas(req, res){
+    let idProfessor = req.params.idProfessor
+    aulaModel.buscarDiaMaisAulas(idProfessor).then(resultado =>{
+        if(resultado.length > 0){
+            res.status(200).json(resultado)
+        }else{
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(error=>{
+        console.log(error);
+        console.log("Houve um erro ao buscar as aulas pelo ID.", error.sqlMessage);
+        res.status(500).json(error.sqlMessage);
+    })
+}
+
+function buscarDiaMenosAulas(req, res){
+    let idProfessor = req.params.idProfessor
+    aulaModel.buscarDiaMenosAulas(idProfessor).then(resultado =>{
+        if(resultado.length > 0){
+            res.status(200).json(resultado)
+        }else{
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(error=>{
+        console.log(error);
+        console.log("Houve um erro ao buscar as aulas pelo ID.", error.sqlMessage);
+        res.status(500).json(error.sqlMessage);
+    })
+}
+
+function buscarTotalSemana(req, res){
+    let idProfessor = req.params.idProfessor
+    aulaModel.buscarTotalSemana(idProfessor).then(resultado =>{
+        if(resultado.length > 0){
+            res.status(200).json(resultado)
+        }else{
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(error=>{
+        console.log(error);
+        console.log("Houve um erro ao buscar as aulas pelo ID.", error.sqlMessage);
+        res.status(500).json(error.sqlMessage);
+    })
+}
+
 function cadastrarAula(req, res) {
     let fkAluno = req.body.fkAlunoServer
     let dataAula = req.body.dataAulaServer
@@ -195,6 +255,10 @@ module.exports = {
     buscarQtdFaltasMes,
     buscarQtdFaltasUltimoMes,
     buscarAlunoMaisFaltas,
+    buscarAulaDiaSemana,
+    buscarDiaMaisAulas,
+    buscarDiaMenosAulas,
+    buscarTotalSemana,
     cadastrarAula,
     removerAula,
     editarAula
