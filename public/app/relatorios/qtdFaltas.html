@@ -50,7 +50,7 @@
                     <p class="responseKpi" id="kpiTotalAulasUltimoMes"></p>
                 </div>
                 <div class="kpiCard">
-                    <p>Total de faltas no último mês: </p>
+                    <p>% de faltas no último mês: </p>
                     <p class="responseKpi" id="kpiTotalFaltasUltimoMes"></p>
                 </div>
                 <div class="kpiCard">
@@ -176,10 +176,13 @@
 
     function buscarKpis(){
         let idProfessor = sessionStorage.ID_USUARIO
+        let totalAulas = 0
+        let qtdFaltas = 0
         fetch(`/aulas/buscarQtdAulasUltimoMes/${idProfessor}`).then(response =>{
             if(response.ok){
                 response.json().then(resposta =>{
                     console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                    totalAulas = resposta[0].qtdAulas
                     kpiTotalAulasUltimoMes.innerHTML = resposta[0].qtdAulas
                 })
             }else {
@@ -194,7 +197,8 @@
             if(response.ok){
                 response.json().then(resposta =>{
                     console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-                    kpiTotalFaltasUltimoMes.innerHTML = resposta[0].numeroFaltas
+                    qtdFaltas = resposta[0].numeroFaltas
+                    kpiTotalFaltasUltimoMes.innerHTML = `${((qtdFaltas / totalAulas) * 100).toFixed(2)}%`
                 })
             }else {
                 console.error('Nenhum dado encontrado ou erro na API');
