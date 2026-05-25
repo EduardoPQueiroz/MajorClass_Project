@@ -299,12 +299,14 @@ group by diaSemana
 order by qtdAulas desc
 limit 1;
 
-select count(*) as qtdAulas, weekofyear(now()) as semana from 
+select count(*) as qtdAulas, yearweek(dataAula, 1) as semana from 
 aula join aluno on
 aula.fkAluno = aluno.idAluno join professor on
 aluno.fkProfessor = professor.idProfessor
-where idProfessor = 100
-group by semana;
+where idProfessor = 100 
+group by semana
+having semana = yearweek(now(), 1);
+
 
 update aluno set email = 'email@gmail.com', 
 						telefone = '11987654321', 

@@ -48,10 +48,11 @@
         </h1>
         <div class="registerForm formCadastro">
             <div class="inputContainer">
+                <span id="fieldError"></span>
                 <div class="inputField">
                     <p>Aluno: </p>
                     <select name="" id="selectAluno">
-                    </select>   
+                    </select>
                 </div>
                 <div class="inputField">
                     <p>Data: </p>
@@ -66,31 +67,43 @@
         </div>
     </div>
 </body>
+
 </html>
 <script>
-    function cadastrarAula(){
+    function cadastrarAula() {
         let fkAlunoVar = selectAluno.value
         let dataAulaVar = dateInp.value
         let horaAulaVar = horaInp.value
-        fetch(`/aulas/cadastrarAula`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                fkAlunoServer: fkAlunoVar,
-                dataAulaServer: dataAulaVar,
-                horaAulaServer: horaAulaVar,
-            }),
-        }).then(response=>{
-            if(response.ok){
-                alert("Aula cadastrada com sucesso!")
-                window.location.href='aulasPage.html'
-            }else{
-                throw("Houve um erro ao cadastrar a aula")
-            }
-        }).catch(error=>{
-            console.error("Houve um erro ao cadastrar", error)
-        })
+
+        let dataAula = new Date(dataAulaVar)
+        let hoje = new Date()
+
+        if (dataAula.getTime() > hoje.getTime()) {
+            fetch(`/aulas/cadastrarAula`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    fkAlunoServer: fkAlunoVar,
+                    dataAulaServer: dataAulaVar,
+                    horaAulaServer: horaAulaVar,
+                }),
+            }).then(response => {
+                if (response.ok) {
+                    alert("Aula cadastrada com sucesso!")
+                    window.location.href = 'aulasPage.html'
+                } else {
+                    throw ("Houve um erro ao cadastrar a aula")
+                }
+            }).catch(error => {
+                console.error("Houve um erro ao cadastrar", error)
+            })
+        }else{
+            fieldError.innerHTML = 'A DATA DA AULA DEVE SER POSTERIOR A HOJE.'
+        }
+
+
+
     }
 </script>
