@@ -178,35 +178,54 @@
         let idProfessor = sessionStorage.ID_USUARIO
         let totalAulas = 0
         let qtdFaltas = 0
-        fetch(`/aulas/buscarQtdAulasUltimoMes/${idProfessor}`).then(response =>{
-            if(response.ok){
-                response.json().then(resposta =>{
-                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-                    totalAulas = resposta[0].qtdAulas
-                    kpiTotalAulasUltimoMes.innerHTML = resposta[0].qtdAulas
-                })
-            }else {
-                console.error('Nenhum dado encontrado ou erro na API');
-            }
-        })
-            .catch(function (error) {
-                console.error(`Erro na obtenção dos dados: ${error.message}`);
-        });
 
-        fetch(`/aulas/buscarQtdFaltasUltimoMes/${idProfessor}`).then(response =>{
-            if(response.ok){
-                response.json().then(resposta =>{
-                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-                    qtdFaltas = resposta[0].numeroFaltas
-                    kpiTotalFaltasUltimoMes.innerHTML = `${((qtdFaltas / totalAulas) * 100).toFixed(2)}%`
-                })
-            }else {
-                console.error('Nenhum dado encontrado ou erro na API');
-            }
-        })
-            .catch(function (error) {
+        let promisseAulas = fetch(`/aulas/buscarQtdAulasUltimoMes/${idProfessor}`);
+        let promisseFaltas = fetch(`/aulas/buscarQtdFaltasUltimoMes/${idProfessor}`);
+
+        // promisseAulas.then(response =>{
+        //     if(response.ok){
+        //         response.json().then(resposta =>{
+        //             console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+        //             totalAulas = resposta[0].qtdAulas
+        //             kpiTotalAulasUltimoMes.innerHTML = resposta[0].qtdAulas
+        //         })
+        //     }else {
+        //         console.error('Nenhum dado encontrado ou erro na API');
+        //     }
+        // })
+        //     .catch(function (error) {
+        //         console.error(`Erro na obtenção dos dados: ${error.message}`);
+        // });
+
+        // promisseFaltas.then(response =>{
+        //     if(response.ok){
+        //         response.json().then(resposta =>{
+        //             console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+        //             qtdFaltas = resposta[0].numeroFaltas
+        //         })
+        //     }else {
+        //         console.error('Nenhum dado encontrado ou erro na API');
+        //     }
+        // })
+        // .catch(function (error) {
+        //     console.error(`Erro na obtenção dos dados: ${error.message}`);
+        // });
+        
+
+        Promise.all([promisseAulas, promisseFaltas])
+            .then((dados) => {
+                return Promise.all([dados[0].json(), dados[1].json()])
+            })
+            .then(dadosJson => {
+                totalAulas = dadosJson[0][0].qtdAulas;
+                kpiTotalAulasUltimoMes.innerHTML = totalAulas;
+                
+                qtdFaltas = dadosJson[1][0].numeroFaltas;
+                kpiTotalFaltasUltimoMes.innerHTML = `${((qtdFaltas / totalAulas) * 100).toFixed(2)}%`;
+            })
+            .catch((error) => {
                 console.error(`Erro na obtenção dos dados: ${error.message}`);
-        });
+            });
 
         fetch(`/aulas/buscarAlunoMaisFaltas/${idProfessor}`).then(response =>{
             if(response.ok){
