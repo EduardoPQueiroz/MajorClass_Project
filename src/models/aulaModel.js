@@ -19,7 +19,8 @@ function buscarHistoricoAulas(fkAluno){
     var instrucaoSql = `select au.dataAula, au.presenca, au.fkAluno, al.nome, i.nome as nomeInstrumento from aula au join aluno al 
                         on al.idAluno = au.fkAluno join
                         instrumento i on al.fkInstrumento = i.idInstrumento
-                        where fkAluno = ${fkAluno} and au.realizada = 1;`
+                        where fkAluno = ${fkAluno} and au.realizada = 1
+                        order by au.dataAula desc;`
     console.log("Executando a instrução SQL: \n" + instrucaoSql)
     return database.executar(instrucaoSql)
 }
